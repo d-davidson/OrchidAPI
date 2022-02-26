@@ -280,14 +280,13 @@ class OrchidAPI:
         """
         return self._get(f'/cameras/{camera_id}/position')
 
-    def set_camera_ptz_position(self, camera_id, preset_name):
+    def set_camera_ptz_position(self, camera_id, body):
         """Set a camera's PTZ position.
 
         Parameters:
-        camera_id   - ID of camera to set PTZ position for.
-        preset_name - Camera PTZ resource body.
+        camera_id - ID of camera to set PTZ position for.
+        body      - Camera PTZ resource body.
         """
-        body = { 'name': preset_name }
         return self._post(f'/cameras/{camera_id}/position', body)
 
     def get_camera_ptz_presets(self, camera_id):
@@ -298,13 +297,14 @@ class OrchidAPI:
         """
         return self._get(f'/cameras/{camera_id}/position/presets')
 
-    def set_camera_ptz_preset(self, camera_id, body):
+    def set_camera_ptz_preset(self, camera_id, preset_name):
         """Set a camera's PTZ preset at the camera's current PTZ position.
 
         Parameters:
-        camera_id - ID of camera to set PTZ preset for.
-        body      - Camera PTZ preset resource body.
+        camera_id   - ID of camera to set PTZ preset for.
+        preset_name - Name of preset.
         """
+        body = { 'name': preset_name }
         return self._post(f'/cameras/{camera_id}/position/presets', body)
 
     def delete_camera_ptz_preset(self, camera_id, preset_token: str):
