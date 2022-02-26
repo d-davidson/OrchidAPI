@@ -314,7 +314,7 @@ class OrchidAPI:
         camera_id    - ID of camera to delete PTZ preset for.
         preset_token - Token/ID of the PTZ preset to delete.
         """
-        return self.delete(f'/cameras/{camera_id}/position/presets/{preset_token}')
+        return self._delete(f'/cameras/{camera_id}/position/presets/{preset_token}')
 
     ### Stream Services
 
@@ -536,7 +536,7 @@ class OrchidAPI:
                 'height': height,
                 'width': width
                 },
-            'startTime': start if start else int(time.time() * 1000),
+            'startTime': start,
             'sync': sync,
             'rate': rate,
             'waitThres': wait_thres,
@@ -859,7 +859,7 @@ class OrchidAPI:
         """Internal - HTTP PUT"""
         if isinstance(body, dict):
             body = json.dumps(body)
-        return self.request('PUT', path, data=body)
+        return self._request('PUT', path, data=body)
 
     def _post(self, path, body=None):
         """Internal - HTTP POST"""
