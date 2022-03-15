@@ -1,4 +1,4 @@
-"""OrchidAPI - Orchid Core VMS API wrapper.
+"""OrchidAPI: Orchid Core VMS API wrapper.
 
 This library is implemented in accordance with the Orchid Core VMS
 API documentation: https://orchid.ipconfigure.com/api/.
@@ -39,7 +39,7 @@ class OrchidAPI:
         """Set the bearer authorization token for HTTP requests.
 
         Parameters:
-        token - Bearer authorization token to set.
+        token: Bearer authorization token to set.
         """
         self.session.auth = BearerAuth(token)
 
@@ -49,9 +49,8 @@ class OrchidAPI:
         """Get the Orchid Core VMS server time (in epoch milliseconds, UTC).
 
         Parameters:
-        extended - If true, return extended response that includes timezone
-                   information. Otherwise, return epoch timestamp only.
-                   Defaults to true.
+        extended: If true, return extended response that includes timezone
+        information. Otherwise, return epoch timestamp only.
         """
         if extended:
             return self._get('/time-extended')
@@ -67,10 +66,13 @@ class OrchidAPI:
         """Create a trusted issuer.
 
         Parameters:
-        orchid_uuid - UUID for the Orchid Core VMS server.
-        secret      - 32-byte shared secret used to create JWT.
-        description - Describes the trusted issue.
-        uri         - URI to the trusted issuer.
+        orchid_uuid: UUID for the Orchid Core VMS server.
+
+        secret: 32-byte shared secret used to create JWT.
+
+        description: Describes the trusted issue.
+
+        uri: URI to the trusted issuer.
         """
         body = {
             'id': orchid_uuid,
@@ -106,11 +108,13 @@ class OrchidAPI:
         """Create a new user session.
 
         Parameters:
-        username   - Orchid Core VMS username.
-        password   - Password for username.
-        expires_in - Expiration for user session (in seconds). Defaults
-                     to 1 hour.
-        cookie     - Type of session cookie: [persistent, session].
+        username: Orchid Core VMS username.
+
+        password: Password for username.
+
+        expires_in: Expiration for user session (in seconds).
+
+        cookie: Type of session cookie: [persistent, session].
         """
         body = {
             'username': username,
@@ -124,11 +128,13 @@ class OrchidAPI:
         """Create a new remote session.
 
         Parameters:
-        session_name - Name of the remote session.
-        expires_in   - Expiration for remote session (in seconds). Defaults
-                       to 1 hour.
-        cookie       - Type of session cookie: [persistent, session].
-        scope        - Permission sets.
+        session_name: Name of the remote session.
+
+        expires_in: Expiration for remote session (in seconds).
+
+        cookie: Type of session cookie: [persistent, session].
+
+        scope: Permission sets.
         """
         body = {
             'name': session_name,
@@ -143,8 +149,8 @@ class OrchidAPI:
         """Get all sessions associated to Orchid Core VMS server.
 
         Parameters:
-        session_type - Session type filter: [user, remote].
-                       If not set, all session types are retrieved.
+        session_type: Session type filter: [user, remote].
+        If not set, all session types are retrieved.
         """
         if session_type:
             return self._get(f'/sessions?type={session_type}')
@@ -154,8 +160,8 @@ class OrchidAPI:
         """Delete all sessions.
 
         Parameters:
-        session_type - Session type filter: [user, remote].
-                       If not set, all session types are deleted.
+        session_type: Session type filter: [user, remote].
+        If not set, all session types are deleted.
         """
         if session_type:
             return self._delete(f'/sessions?type={session_type}')
@@ -165,7 +171,7 @@ class OrchidAPI:
         """Get a session by ID.
 
         Parameters:
-        session_id - ID of the session to retrieve.
+        session_id: ID of the session to retrieve.
         """
         return self._get(f'/sessions?{session_id}')
 
@@ -173,7 +179,7 @@ class OrchidAPI:
         """Delete a session by ID.
 
         Parameters:
-        session_id - ID of the session to delete.
+        session_id: ID of the session to delete.
         """
         return self._delete(f'/sessions?{session_id}')
 
@@ -191,7 +197,7 @@ class OrchidAPI:
         """Get a discovered Orchid Core VMS
 
         Parameters:
-        orchid_id: ID of the Orchid Core VMS. Defaults to 1.
+        orchid_id: ID of the Orchid Core VMS.
         """
         return self._get(f'/discoverable/orchids/{orchid_id}')
 
@@ -205,11 +211,15 @@ class OrchidAPI:
         """Register an ONVIF compatible camera.
 
         Parameters:
-        address     - IP address of the camera (e.g. 192.168.202.55).
-        camera_user - Username registered on the camera.
-        password    - Password for camera user.
-        name        - Name of the camera (defaults to address).
-        https       - If true, use https scheme for registration. Otherwise use http.
+        address: IP address of the camera (e.g. 192.168.202.55).
+
+        camera_user: A valid username registered on the camera.
+
+        password: Password for camera user.
+
+        name: Name of the camera (defaults to `address`).
+
+        https: If true, use https scheme for registration. Otherwise use http.
         """
         if not name:
             name = address
@@ -218,15 +228,20 @@ class OrchidAPI:
                                                     camera_user, password, name=name, driver='ONVIF')
         return self._post('/cameras', body)
 
-    def register_rtsp_camera(self, uri, camera_user, password, name):
+    def register_rtsp_camera(self, uri, camera_user, password, name=None):
         """Register a generic RTSP camera.
 
         Parameters:
-        uri         - URI to the RTSP stream.
-        camera_user - Username registered to the camera.
-        password    - Password for camera user.
-        name        - Name of the camera.
+        uri: URI to the RTSP stream.
+
+        camera_user: A valid username registered on the camera.
+
+        password: Password for camera user.
+
+        name: Name of the camera (defaults to `uri`).
         """
+        if not name:
+            name = uri
         body = self._generate_cam_registration_body(uri, camera_user, password,
                                                     name=name, driver='Generic RTSP')
         return self._post('/cameras', body)
@@ -235,7 +250,7 @@ class OrchidAPI:
         """Get a camera by ID.
 
         Parameters:
-        camera_id - ID of camera to retrieve.
+        camera_id: ID of camera to retrieve.
         """
         return self._get(f'/cameras/{camera_id}')
 
@@ -243,8 +258,9 @@ class OrchidAPI:
         """Patch a camera (partial update).
 
         Parameters:
-        camera_id - ID of camera to update.
-        body      - Camera resource PATCH body.
+        camera_id: ID of camera to update.
+
+        body: Camera resource PATCH body.
         """
         return self._patch(f'/cameras/{camera_id}', body)
 
@@ -252,7 +268,7 @@ class OrchidAPI:
         """Delete a camera.
 
         Parameters:
-        camera_id - ID of camera to delete.
+        camera_id: ID of camera to delete.
         """
         return self._delete(f'/cameras/{camera_id}')
 
@@ -260,7 +276,7 @@ class OrchidAPI:
         """Verify a camera is pingable.
 
         Parameters:
-        camera_id - ID of camera to ping.
+        camera_id: ID of camera to ping.
         """
         return self._get(f'/cameras/{camera_id}/verify')
 
@@ -276,7 +292,7 @@ class OrchidAPI:
         """Get a camera's current PTZ position.
 
         Parameters:
-        camera_id - ID of camera to retrieve PTZ position for.
+        camera_id: ID of camera to retrieve PTZ position for.
         """
         return self._get(f'/cameras/{camera_id}/position')
 
@@ -284,8 +300,9 @@ class OrchidAPI:
         """Set a camera's PTZ position.
 
         Parameters:
-        camera_id - ID of camera to set PTZ position for.
-        body      - Camera PTZ resource body.
+        camera_id: ID of camera to set PTZ position for.
+
+        body: Camera PTZ resource body.
         """
         return self._post(f'/cameras/{camera_id}/position', body)
 
@@ -293,7 +310,7 @@ class OrchidAPI:
         """Get a list of a camera's PTZ presets.
 
         Parameters:
-        camera_id - ID of camera to retrieve PTZ preset list for.
+        camera_id: ID of camera to retrieve PTZ preset list for.
         """
         return self._get(f'/cameras/{camera_id}/position/presets')
 
@@ -301,8 +318,9 @@ class OrchidAPI:
         """Set a camera's PTZ preset at the camera's current PTZ position.
 
         Parameters:
-        camera_id   - ID of camera to set PTZ preset for.
-        preset_name - Name of preset.
+        camera_id: ID of camera to set PTZ preset for.
+
+        preset_name: Name of preset.
         """
         body = { 'name': preset_name }
         return self._post(f'/cameras/{camera_id}/position/presets', body)
@@ -311,8 +329,9 @@ class OrchidAPI:
         """Delete the PTZ preset on a camera.
 
         Parameters:
-        camera_id    - ID of camera to delete PTZ preset for.
-        preset_token - Token/ID of the PTZ preset to delete.
+        camera_id: ID of camera to delete PTZ preset for.
+
+        preset_token: Token/ID of the PTZ preset to delete.
         """
         return self._delete(f'/cameras/{camera_id}/position/presets/{preset_token}')
 
@@ -322,7 +341,7 @@ class OrchidAPI:
         """List all the stream's for a camera.
 
         Parameters:
-        camera_id - ID of camera to retrieve streams for.
+        camera_id: ID of camera to retrieve streams for.
         """
         return self._get(f'/cameras/{camera_id}/streams')
 
@@ -330,8 +349,9 @@ class OrchidAPI:
         """Register a new stream for a camera.
 
         Parameters:
-        camera_id - ID of camera to register a new stream for.
-        body      - Stream resource body.
+        camera_id: ID of camera to register a new stream for.
+
+        body: Stream resource body.
         """
         return self._post(f'/cameras/{camera_id}/streams', body)
 
@@ -339,8 +359,9 @@ class OrchidAPI:
         """Get a camera's stream.
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to retrieve.
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to retrieve.
         """
         return self._get(f'/cameras/{camera_id}/streams/{stream_id}')
 
@@ -348,9 +369,11 @@ class OrchidAPI:
         """Patch a camera's stream (partial update).
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to update.
-        body      - Stream resource PATCH body.
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to update.
+
+        body: Stream resource PATCH body.
         """
         return self._patch(f'/cameras/{camera_id}/streams/{stream_id}', body)
 
@@ -358,9 +381,11 @@ class OrchidAPI:
         """Update a camera's stream (full update).
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to update.
-        body      - Stream resource body.
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to update.
+
+        body: Stream resource body.
         """
         return self._put(f'/cameras/{camera_id}/streams/{stream_id}', body)
 
@@ -368,8 +393,9 @@ class OrchidAPI:
         """Delete a camera's stream.
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to delete.
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to delete.
         """
         return self._delete(f'/cameras/{camera_id}/streams/{stream_id}')
 
@@ -377,8 +403,9 @@ class OrchidAPI:
         """Restart a camera stream.
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to restart.
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to restart.
         """
         return self._patch(f'/cameras/{camera_id}/streams/{stream_id}/restart')
 
@@ -386,8 +413,9 @@ class OrchidAPI:
         """Get a camera stream's motion mask.
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to get motion mask for
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to get motion mask for
         """
         return self._get(f'/cameras/{camera_id}/streams/{stream_id}/motion/mask')
 
@@ -395,9 +423,11 @@ class OrchidAPI:
         """Upload a camera stream's motion mask.
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to upload motion mask for.
-        mask      - PNG image of stream frame, in bytes, containing motion mask.
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to upload motion mask for.
+
+        mask: PNG image of stream frame, in bytes, containing motion mask.
         """
         return self._put(f'/cameras/{camera_id}/streams/{stream_id}/motion/mask', mask)
 
@@ -405,8 +435,9 @@ class OrchidAPI:
         """Delete a camera stream's motion mask.
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to delete motion mask for.
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to delete motion mask for.
         """
         return self._delete(f'/cameras/{camera_id}/streams/{stream_id}/motion/mask')
 
@@ -422,7 +453,7 @@ class OrchidAPI:
         """Get a stream.
 
         Parameters:
-        stream_id - ID of stream to retrieve.
+        stream_id: ID of stream to retrieve.
         """
         return self._get(f'/streams/{stream_id}')
 
@@ -430,13 +461,17 @@ class OrchidAPI:
         """Get a stream JPEG frame.
 
         Parameters:
-        stream_id - ID of stream to retrieve frame for.
-        time      - Frame time (server time in epoch milliseconds, UTC). 0 is a special value for
-                    retrieving first frame from the latest archive. Defaults to 0.
-        height    - Desired frame height. 0 is a special value for using the streams native resolution.
-        width     - Desired frame width. 0 is a special value for using the streams native resolution.
-        fallback  - If true, on errors, a black GIF wil be returned. Otherwise on errors, an error code
-                    is returned.
+        stream_id: ID of stream to retrieve frame for.
+
+        time: Frame time (server time in epoch milliseconds, UTC). 0 is a special value for
+        retrieving first frame from the latest archive.
+
+        height: Desired frame height. 0 is a special value for using the streams native resolution.
+
+        width: Desired frame width. 0 is a special value for using the streams native resolution.
+
+        fallback: If true, on errors, a black GIF wil be returned. Otherwise on errors, an error code
+        is returned.
         """
         return self._get(f'/streams/{stream_id}/frame?time={time}&width={width}&height={height}&fallback={fallback}')
 
@@ -444,11 +479,13 @@ class OrchidAPI:
         """Export media from a stream.
 
         Parameters:
-        stream_id - ID of stream to export media for.
-        start     - Start time (server time in epoch milliseconds, UTC).
-        stop      - Stop time (server time in epoch milliseconds, UTC).
-        container - Video export format: [mkv, mov, mp4, dewarp, dewarp-parent].
-                    Defaults to mkv.
+        stream_id: ID of stream to export media for.
+
+        start: Start time (server time in epoch milliseconds, UTC).
+
+        stop: Stop time (server time in epoch milliseconds, UTC).
+
+        container: Video export format: [mkv, mov, mp4, dewarp, dewarp-parent].
         """
         return self._get(f'/streams/{stream_id}/export?start={start}&stop={stop}&format={container}')
 
@@ -456,8 +493,9 @@ class OrchidAPI:
         """Get a camera stream's metadata.
 
         Parameters:
-        camera_id - ID of camera that stream is associated to.
-        stream_id - ID of stream to retrieve metadata for.
+        camera_id: ID of camera that stream is associated to.
+
+        stream_id: ID of stream to retrieve metadata for.
         """
         return self._get(f'/cameras/{camera_id}/streams/{stream_id}/metadata')
 
@@ -465,7 +503,7 @@ class OrchidAPI:
         """Get status of a stream.
 
         Parameters:
-        stream_id - ID of stream to retrieve status for.
+        stream_id: ID of stream to retrieve status for.
         """
         return self._get(f'/streams/{stream_id}/status')
 
@@ -475,11 +513,14 @@ class OrchidAPI:
         """Get a list of existing archives.
 
         Parameters:
-        start     - Start (server time in epoch milliseconds, UTC). If 0, defaults
-                    to current epoch time in milliseconds, UTC.
-        take      - Number of archives to return. Defaults to 100.
-        offset    - Number of archives to skip. Defaults to 0.
-        stream_id - If specified, only retrieve archives associated to stream.
+        start: Start (server time in epoch milliseconds, UTC). If 0, defaults
+        to current epoch time in milliseconds, UTC.
+
+        take: Number of archives to return.
+
+        offset: Number of archives to skip.
+
+        stream_id: If specified, only retrieve archives associated to stream.
         """
         query_params = f'start={start}&take={take}&offset={offset}'
         if stream_id:
@@ -490,7 +531,7 @@ class OrchidAPI:
         """Get an archive by ID.
 
         Parameters:
-        archive_id - ID of archive to retrieve.
+        archive_id: ID of archive to retrieve.
         """
         return self._get(f'/archives/{archive_id}')
 
@@ -498,7 +539,7 @@ class OrchidAPI:
         """Download an archive by ID.
 
         Parameters:
-        archive_id - ID of archive to download.
+        archive_id: ID of archive to download.
         """
         return self._get(f'/archives/{archive_id}/download')
 
@@ -517,18 +558,24 @@ class OrchidAPI:
         """Create a new low-bandwidth mode (LBM) stream.
 
         Parameters:
-        stream_id  - ID of stream to create LBM session for.
-        height     - Desired resolution height.
-        width      - Desired resolution width.
-        start      - Start time of stream (server time, epoch milliseconds). Use
-                     0 to specify live. Defaults to 0.
-        sync       - If true, apply time offset to video to account for request latency.
-                     Only applies to playback streams. Defaults to false.
-        rate       - Rate of playback stream. Defaults to 1.0.
-        wait_thres - The max time allowed (milliseconds) to wait for media to start playing or
-                     to bridge a media gap. Defaults to 2000.
-        transport  - Mode for transmitting frames: [http, websocket-base64]. Defaults to
-                     websocket-base64.
+        stream_id: ID of stream to create LBM session for.
+
+        height: Desired resolution height.
+
+        width: Desired resolution width.
+
+        start: Start time of stream (server time, epoch milliseconds). Use
+        0 to specify live.
+
+        sync: If true, apply time offset to video to account for request latency.
+        Only applies to playback streams.
+
+        rate: Rate of playback stream.
+
+        wait_thres: The max time allowed (milliseconds) to wait for media to start playing or
+        to bridge a media gap.
+
+        transport : Mode for transmitting frames: [http, websocket-base64].
         """
         body = {
             'streamId': stream_id,
@@ -548,7 +595,7 @@ class OrchidAPI:
         """Get a low-bandwidth mode stream by ID.
 
         Parameters:
-        stream_uuid - ID of low-bandwidth mode stream.
+        stream_uuid: ID of low-bandwidth mode stream.
         """
         return self._get(f'/low-bandwidth/streams/{stream_uuid}')
 
@@ -556,7 +603,7 @@ class OrchidAPI:
         """Delete an LBM stream.
 
         Parameters:
-        stream_uuid - ID of low-bandwidth mode stream to delete.
+        stream_uuid: ID of low-bandwidth mode stream to delete.
         """
         return self._delete(f'/low-bandwidth/streams/{stream_uuid}')
 
@@ -564,7 +611,7 @@ class OrchidAPI:
         """Get a low-bandwidth mode stream JPEG frame from a session created for `http` mode.
 
         Parameters:
-        stream_uuid - ID of low-bandwidth mode stream to get frame for.
+        stream_uuid: ID of low-bandwidth mode stream to get frame for.
         """
         return self._get(f'/low-bandwidth/streams/{stream_uuid}/frame')
 
@@ -574,14 +621,18 @@ class OrchidAPI:
         """Get server events.
 
         Parameters:
-        start       - Start time (server time in epoch milliseconds, UTC).
-        stop        - Stop time (server time in epoch milliseconds, UTC). If not specified
-                      default to time of latest server event available.
-        count       - Number of events to return. If not specified, return all events.
-        server_ids  - Comma separated string of server IDs. If specified, only retrieve events
-                      for listed servers.
-        event_types - Comma servers string of event types. If specified, only retrieve the
-                      listed event types.
+        start: Start time (server time in epoch milliseconds, UTC).
+
+        stop: Stop time (server time in epoch milliseconds, UTC). If not specified
+        default to time of latest server event available.
+
+        count: Number of events to return. If not specified, return all events.
+
+        server_ids: Comma separated string of server IDs. If specified, only retrieve events
+        for listed servers.
+
+        event_types: Comma servers string of event types. If specified, only retrieve the
+        listed event types.
         """
         query_params = self._generate_event_query_params(start, stop, count, server_ids, event_types)
         return self._get(f'/events/server?{query_params}')
@@ -590,14 +641,18 @@ class OrchidAPI:
         """Get camera stream events.
 
         Parameters:
-        start       - Start time (server time in epoch milliseconds, UTC).
-        stop        - Stop time (server time in epoch milliseconds, UTC). If not specified
-                      default to time of latest server event available.
-        count       - Number of events to return. If not specified, return all events.
-        stream_ids  - Comma separated string of stream IDs. If specified, only retrieve events
-                      for listed streams.
-        event_types - Comma servers string of event types. If specified, only retrieve the
-                      listed event types.
+        start: Start time (server time in epoch milliseconds, UTC).
+
+        stop: Stop time (server time in epoch milliseconds, UTC). If not specified
+        default to time of latest server event available.
+
+        count: Number of events to return. If not specified, return all events.
+
+        stream_ids: Comma separated string of stream IDs. If specified, only retrieve events
+        for listed streams.
+
+        event_types: Comma servers string of event types. If specified, only retrieve the
+        listed event types.
         """
         query_params = self._generate_event_query_params(start, stop, count, stream_ids, event_types)
         return self._get(f'/events/camera-stream?{query_params}')
@@ -606,13 +661,17 @@ class OrchidAPI:
         """Get camera stream event histogram.
 
         Parameters:
-        start       - Start time (server time in epoch milliseconds, UTC).
-        stop        - Stop time (server time in epoch milliseconds, UTC).
-        min_segment - Segment size of binned results.
-        stream_ids  - Comma separated string of stream IDs. If specified, only retrieve events
-                      for listed streams.
-        event_types - Comma servers string of event types. If specified, only retrieve the
-                      listed event types.
+        start: Start time (server time in epoch milliseconds, UTC).
+
+        stop: Stop time (server time in epoch milliseconds, UTC).
+
+        min_segment: Segment size of binned results.
+
+        stream_ids: Comma separated string of stream IDs. If specified, only retrieve events
+        for listed streams.
+
+        event_types: Comma servers string of event types. If specified, only retrieve the
+        listed event types.
         """
         query_params = f'start={start}&stop={stop}&minSegment={min_segment}'
         if stream_ids:
@@ -627,11 +686,13 @@ class OrchidAPI:
         """Get server logs.
 
         Parameters:
-        log_format - Log file format: [gzip, text]. Defaults to gzip.
-        start      - Start time (server time in epoch milliseconds, UTC).
-                     If not specified, use start time of earliest server log file.
-        stop       - Stop time (server time in epoch milliseconds, UTC).
-                     If not specified, use stop time of the latest server log file.
+        log_format: Log file format: [gzip, text].
+
+        start: Start time (server time in epoch milliseconds, UTC).
+        If not specified, use start time of earliest server log file.
+
+        stop: Stop time (server time in epoch milliseconds, UTC).
+        If not specified, use stop time of the latest server log file.
         """
         query_params = f'format={log_format}'
         if start:
@@ -650,10 +711,11 @@ class OrchidAPI:
         """Create a new user.
 
         Parameters:
-        username - Name of new user.
-        Password - Password for new user.
-        role     - Permission scope: [Administrator, Manager, Live Viewer, Viewer].
-                   Defaults to Manager.
+        username: Name of new user.
+
+        password: Password for new user.
+
+        role: Permission scope: [Administrator, Manager, Live Viewer, Viewer].
         """
         body = {
             'username': username,
@@ -666,7 +728,7 @@ class OrchidAPI:
         """Get a user by ID.
 
         Parameters:
-        user_id - ID of user to retrieve.
+        user_id: ID of user to retrieve.
         """
         return self._get(f'/users/{user_id}')
 
@@ -674,8 +736,9 @@ class OrchidAPI:
         """Update a user (full update).
 
         Parameters:
-        user_id - ID of user to update.
-        body    - User resource body.
+        user_id: ID of user to update.
+
+        body: User resource body.
         """
         return self._put(f'/users/{user_id}', body)
 
@@ -683,8 +746,9 @@ class OrchidAPI:
         """Patch a user (partial update).
 
         Parameters:
-        user_id - ID of user to update.
-        body    - User resource body.
+        user_id: ID of user to update.
+
+        body: User resource body.
         """
         return self._patch(f'/users/{user_id}', body)
 
@@ -692,7 +756,7 @@ class OrchidAPI:
         """Delete a user.
 
         Parameters:
-        user_id - ID of user to delete.
+        user_id: ID of user to delete.
         """
         return self._delete(f'/users/{user_id}')
 
@@ -706,7 +770,7 @@ class OrchidAPI:
         """Get a server by ID.
 
         Parameters:
-        server_id - ID of server to retrieve. Defaults to 1.
+        server_id: ID of server to retrieve.
         """
         return self._get(f'/servers/{server_id}')
 
@@ -714,8 +778,9 @@ class OrchidAPI:
         """Generate a server report.
 
         Parameters:
-        start - Start time (server time in epoch milliseconds, UTC).
-        stop  - Stop time (server time in epoch milliseconds, UTC).
+        start: Start time (server time in epoch milliseconds, UTC).
+
+        stop: Stop time (server time in epoch milliseconds, UTC).
         """
         return self._get(f'/server/report?start={start}&stop={stop}')
 
@@ -727,9 +792,10 @@ class OrchidAPI:
         """Get the server's database errors.
 
         Parameters:
-        start - Start time (server time in epoch milliseconds, UTC).
-        stop  - Stop time (server in epoch milliseconds, UTC). If not specified.
-                All database faults after start time will be retrieved.
+        start: Start time (server time in epoch milliseconds, UTC).
+
+        stop: Stop time (server in epoch milliseconds, UTC). If not specified.
+        All database faults after start time will be retrieved.
         """
         query_params = f'start={start}'
         if stop:
@@ -750,7 +816,7 @@ class OrchidAPI:
         """Update the server properties file.
 
         Parameters:
-        body - Server properties resource body.
+        body: Server properties resource body.
         """
         return self._put('/server/properties', body)
 
@@ -762,8 +828,8 @@ class OrchidAPI:
         """Confirm changes made to the properties file.
 
         Parameters:
-        confirmed - If true, confirm the properties. Otherwise the
-                    server will revert to the previously configured settings.
+        confirmed: If true, confirm the properties. Otherwise the
+        server will revert to the previously configured settings.
         """
         body = { 'propertiesConfirmed': confirmed }
         return self._post('/server/properties/confirmed', body)
@@ -778,7 +844,7 @@ class OrchidAPI:
         """List an archive storage location by ID.
 
         Parameters:
-        storage_id: ID of storage location to retrieve. Defaults to 1.
+        storage_id: ID of storage location to retrieve.
         """
         return self._get(f'/storages/{storage_id}')
 
@@ -792,7 +858,7 @@ class OrchidAPI:
         """Create a new license session.
 
         Parameters:
-        orchid_license - New Orchid Core VMS license to upload.
+        orchid_license: New Orchid Core VMS license to upload.
         """
         body = { 'license': orchid_license }
         return self._post('/license-session', body)
@@ -820,14 +886,14 @@ class OrchidAPI:
 
         Parameters:
         ui_package: ZIP package in bytes to upload. Note that this package must be
-                    signed by IPConfigure, Inc.
+        signed by IPConfigure, Inc.
         """
         return self._post('/ui', ui_package)
 
     ### Internal Utility
 
     def _request(self, method, path, data=None):
-        """Internal - Make an HTTP request
+        """Internal: Make an HTTP request
 
         This adds an extra `body` member to the `request.Response` object,
         which is automatically typed based on the response content-type:
@@ -836,9 +902,11 @@ class OrchidAPI:
           bytes -> anything that is not of the previous two
 
         Parameters:
-        method - HTTP method.
-        path   - Endpoint path.
-        data   - Request body data.
+        method: HTTP method.
+
+        path: Endpoint path.
+
+        data: Request body data.
         """
         response = self.session.request(method, f'{self.server_address}/service/{path.lstrip("/")}',
                                         data=data, timeout=self.connection_timeout)
@@ -852,34 +920,34 @@ class OrchidAPI:
         return response
 
     def _get(self, path):
-        """Internal - HTTP GET"""
+        """Internal: HTTP GET"""
         return self._request('GET', path)
 
     def _put(self, path, body=None):
-        """Internal - HTTP PUT"""
+        """Internal: HTTP PUT"""
         if isinstance(body, dict):
             body = json.dumps(body)
         return self._request('PUT', path, data=body)
 
     def _post(self, path, body=None):
-        """Internal - HTTP POST"""
+        """Internal: HTTP POST"""
         if isinstance(body, dict):
             body = json.dumps(body)
         return self._request('POST', path, data=body)
 
     def _patch(self, path, body=None):
-        """Internal - HTTP PATCH"""
+        """Internal: HTTP PATCH"""
         if isinstance(body, dict):
             body = json.dumps(body)
         return self._request('PATCH', path, data=body)
 
     def _delete(self, path):
-        """Internal - HTTP DELETE"""
+        """Internal: HTTP DELETE"""
         return self._request('DELETE', path)
 
     @staticmethod
     def _generate_cam_registration_body(uri, username, password, name, driver):
-        """Internal - Generate request body for registering new cameras"""
+        """Internal: Generate request body for registering new cameras"""
         body = {
             'driver': driver,
             'name': name,
@@ -893,7 +961,7 @@ class OrchidAPI:
 
     @staticmethod
     def _generate_event_query_params(start, stop, count, ids, event_types):
-        """Internal - Generate query parameters used for event services"""
+        """Internal: Generate query parameters used for event services"""
         query_params = f'start={start}'
         if stop:
             query_params += f'&stop={stop}'

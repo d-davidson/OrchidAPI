@@ -2,7 +2,7 @@
 
 # orchid\_api
 
-OrchidAPI - Orchid Core VMS API wrapper.
+OrchidAPI: Orchid Core VMS API wrapper.
 
 This library is implemented in accordance with the Orchid Core VMS
 API documentation: https://orchid.ipconfigure.com/api/.
@@ -39,7 +39,7 @@ Set the bearer authorization token for HTTP requests.
 
 **Arguments**:
 
-  `token` - Bearer authorization token to set.
+- `token` - Bearer authorization token to set.
 
 <a id="orchid_api.OrchidAPI.get_server_time"></a>
 
@@ -53,7 +53,7 @@ Get the Orchid Core VMS server time (in epoch milliseconds, UTC).
 
 **Arguments**:
 
-  `extended` - If true, return extended response that includes timezone
+- `extended` - If true, return extended response that includes timezone
   information. Otherwise, return epoch timestamp only.
 
 <a id="orchid_api.OrchidAPI.get_trusted_issuer"></a>
@@ -78,13 +78,13 @@ Create a trusted issuer.
 
 **Arguments**:
 
-  `orchid_uuid` - UUID for the Orchid Core VMS server.
+- `orchid_uuid` - UUID for the Orchid Core VMS server.
   
-  `secret`      - 32-byte shared secret used to create JWT.
+- `secret` - 32-byte shared secret used to create JWT.
   
-  `description` - Describes the trusted issue.
+- `description` - Describes the trusted issue.
   
-  `uri`         - URI to the trusted issuer.
+- `uri` - URI to the trusted issuer.
 
 <a id="orchid_api.OrchidAPI.delete_trusted_issuer"></a>
 
@@ -138,13 +138,13 @@ Create a new user session.
 
 **Arguments**:
 
-  `username`   - Orchid Core VMS username.
+- `username` - Orchid Core VMS username.
   
-  `password`   - Password for username.
+- `password` - Password for username.
   
-  `expires_in` - Expiration for user session (in seconds).
+- `expires_in` - Expiration for user session (in seconds).
   
-  `cookie`     - Type of session cookie: [`persistent`, `session`].
+- `cookie` - Type of session cookie: [persistent, session].
 
 <a id="orchid_api.OrchidAPI.create_remote_session"></a>
 
@@ -161,13 +161,13 @@ Create a new remote session.
 
 **Arguments**:
 
-  `session_name` - Name of the remote session.
+- `session_name` - Name of the remote session.
   
-  `expires_in`   - Expiration for remote session (in seconds).
+- `expires_in` - Expiration for remote session (in seconds).
   
-  `cookie`       - Type of session cookie: [`persistent`, `session`].
+- `cookie` - Type of session cookie: [persistent, session].
   
-  `scope`        - Permission sets.
+- `scope` - Permission sets.
 
 <a id="orchid_api.OrchidAPI.get_sessions"></a>
 
@@ -181,7 +181,7 @@ Get all sessions associated to Orchid Core VMS server.
 
 **Arguments**:
 
-  `session_type` - Session type filter: [`user`, `remote`].
+- `session_type` - Session type filter: [user, remote].
   If not set, all session types are retrieved.
 
 <a id="orchid_api.OrchidAPI.delete_sessions"></a>
@@ -196,7 +196,7 @@ Delete all sessions.
 
 **Arguments**:
 
-  `session_type` - Session type filter: [`user`, `remote`].
+- `session_type` - Session type filter: [user, remote].
   If not set, all session types are deleted.
 
 <a id="orchid_api.OrchidAPI.get_session"></a>
@@ -211,7 +211,7 @@ Get a session by ID.
 
 **Arguments**:
 
-  `session_id` - ID of the session to retrieve.
+- `session_id` - ID of the session to retrieve.
 
 <a id="orchid_api.OrchidAPI.delete_session"></a>
 
@@ -225,7 +225,7 @@ Delete a session by ID.
 
 **Arguments**:
 
-  `session_id` - ID of the session to delete.
+- `session_id` - ID of the session to delete.
 
 <a id="orchid_api.OrchidAPI.get_discovered_cameras"></a>
 
@@ -259,7 +259,7 @@ Get a discovered Orchid Core VMS
 
 **Arguments**:
 
-  `orchid_id` - ID of the Orchid Core VMS.
+- `orchid_id` - ID of the Orchid Core VMS.
 
 <a id="orchid_api.OrchidAPI.get_cameras"></a>
 
@@ -287,35 +287,35 @@ Register an ONVIF compatible camera.
 
 **Arguments**:
 
-  `address`     - IP address of the camera (e.g. `192.168.202.55`).
+- `address` - IP address of the camera (e.g. 192.168.202.55).
   
-  `camera_user` - Username registered on the camera.
+- `camera_user` - A valid username registered on the camera.
   
-  `password`    - Password for camera user.
+- `password` - Password for camera user.
   
-  `name`        - Name of the camera (defaults to address).
+- `name` - Name of the camera (defaults to `address`).
   
-  `https`       - If true, use https scheme for registration. Otherwise use http.
+- `https` - If true, use https scheme for registration. Otherwise use http.
 
 <a id="orchid_api.OrchidAPI.register_rtsp_camera"></a>
 
 #### register\_rtsp\_camera
 
 ```python
-def register_rtsp_camera(uri, camera_user, password, name)
+def register_rtsp_camera(uri, camera_user, password, name=None)
 ```
 
 Register a generic RTSP camera.
 
 **Arguments**:
 
-  `uri`         - URI to the RTSP stream.
+- `uri` - URI to the RTSP stream.
   
-  `camera_user` - Username registered to the camera.
+- `camera_user` - A valid username registered on the camera.
   
-  `password`    - Password for camera user.
+- `password` - Password for camera user.
   
-  `name`        - Name of the camera.
+- `name` - Name of the camera (defaults to `uri`).
 
 <a id="orchid_api.OrchidAPI.get_camera"></a>
 
@@ -329,7 +329,7 @@ Get a camera by ID.
 
 **Arguments**:
 
-  `camera_id` - ID of camera to retrieve.
+- `camera_id` - ID of camera to retrieve.
 
 <a id="orchid_api.OrchidAPI.patch_camera"></a>
 
@@ -343,9 +343,9 @@ Patch a camera (partial update).
 
 **Arguments**:
 
-  `camera_id` - ID of camera to update.
+- `camera_id` - ID of camera to update.
   
-  `body`      - Camera resource PATCH body.
+- `body` - Camera resource PATCH body.
 
 <a id="orchid_api.OrchidAPI.delete_camera"></a>
 
@@ -359,7 +359,7 @@ Delete a camera.
 
 **Arguments**:
 
-  `camera_id` - ID of camera to delete.
+- `camera_id` - ID of camera to delete.
 
 <a id="orchid_api.OrchidAPI.verify_camera"></a>
 
@@ -373,7 +373,7 @@ Verify a camera is pingable.
 
 **Arguments**:
 
-  `camera_id` - ID of camera to ping.
+- `camera_id` - ID of camera to ping.
 
 <a id="orchid_api.OrchidAPI.get_cameras_disk_usage"></a>
 
@@ -407,7 +407,7 @@ Get a camera's current PTZ position.
 
 **Arguments**:
 
-  `camera_id` - ID of camera to retrieve PTZ position for.
+- `camera_id` - ID of camera to retrieve PTZ position for.
 
 <a id="orchid_api.OrchidAPI.set_camera_ptz_position"></a>
 
@@ -421,9 +421,9 @@ Set a camera's PTZ position.
 
 **Arguments**:
 
-  `camera_id` - ID of camera to set PTZ position for.
+- `camera_id` - ID of camera to set PTZ position for.
   
-  `body`      - Camera PTZ resource body.
+- `body` - Camera PTZ resource body.
 
 <a id="orchid_api.OrchidAPI.get_camera_ptz_presets"></a>
 
@@ -437,7 +437,7 @@ Get a list of a camera's PTZ presets.
 
 **Arguments**:
 
-  `camera_id` - ID of camera to retrieve PTZ preset list for.
+- `camera_id` - ID of camera to retrieve PTZ preset list for.
 
 <a id="orchid_api.OrchidAPI.set_camera_ptz_preset"></a>
 
@@ -451,9 +451,9 @@ Set a camera's PTZ preset at the camera's current PTZ position.
 
 **Arguments**:
 
-  `camera_id`   - ID of camera to set PTZ preset for.
+- `camera_id` - ID of camera to set PTZ preset for.
   
-  `preset_name` - Name of preset.
+- `preset_name` - Name of preset.
 
 <a id="orchid_api.OrchidAPI.delete_camera_ptz_preset"></a>
 
@@ -467,9 +467,9 @@ Delete the PTZ preset on a camera.
 
 **Arguments**:
 
-  `camera_id`    - ID of camera to delete PTZ preset for.
+- `camera_id` - ID of camera to delete PTZ preset for.
   
-  `preset_token` - Token/ID of the PTZ preset to delete.
+- `preset_token` - Token/ID of the PTZ preset to delete.
 
 <a id="orchid_api.OrchidAPI.get_camera_streams"></a>
 
@@ -483,7 +483,7 @@ List all the stream's for a camera.
 
 **Arguments**:
 
-  `camera_id` - ID of camera to retrieve streams for.
+- `camera_id` - ID of camera to retrieve streams for.
 
 <a id="orchid_api.OrchidAPI.register_stream"></a>
 
@@ -497,9 +497,9 @@ Register a new stream for a camera.
 
 **Arguments**:
 
-  `camera_id` - ID of camera to register a new stream for.
+- `camera_id` - ID of camera to register a new stream for.
   
-  `body`      - Stream resource body.
+- `body` - Stream resource body.
 
 <a id="orchid_api.OrchidAPI.get_camera_stream"></a>
 
@@ -513,9 +513,9 @@ Get a camera's stream.
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to retrieve.
+- `stream_id` - ID of stream to retrieve.
 
 <a id="orchid_api.OrchidAPI.patch_stream"></a>
 
@@ -529,11 +529,11 @@ Patch a camera's stream (partial update).
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to update.
+- `stream_id` - ID of stream to update.
   
-  `body`      - Stream resource PATCH body.
+- `body` - Stream resource PATCH body.
 
 <a id="orchid_api.OrchidAPI.update_stream"></a>
 
@@ -547,11 +547,11 @@ Update a camera's stream (full update).
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to update.
+- `stream_id` - ID of stream to update.
   
-  `body`      - Stream resource body.
+- `body` - Stream resource body.
 
 <a id="orchid_api.OrchidAPI.delete_stream"></a>
 
@@ -565,9 +565,9 @@ Delete a camera's stream.
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to delete.
+- `stream_id` - ID of stream to delete.
 
 <a id="orchid_api.OrchidAPI.restart_stream"></a>
 
@@ -581,9 +581,9 @@ Restart a camera stream.
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to restart.
+- `stream_id` - ID of stream to restart.
 
 <a id="orchid_api.OrchidAPI.get_stream_motion_mask"></a>
 
@@ -597,9 +597,9 @@ Get a camera stream's motion mask.
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to get motion mask for
+- `stream_id` - ID of stream to get motion mask for
 
 <a id="orchid_api.OrchidAPI.upload_stream_motion_mask"></a>
 
@@ -613,11 +613,11 @@ Upload a camera stream's motion mask.
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to upload motion mask for.
+- `stream_id` - ID of stream to upload motion mask for.
   
-  `mask`      - PNG image of stream frame, in bytes, containing motion mask.
+- `mask` - PNG image of stream frame, in bytes, containing motion mask.
 
 <a id="orchid_api.OrchidAPI.delete_stream_motion_mask"></a>
 
@@ -631,9 +631,9 @@ Delete a camera stream's motion mask.
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to delete motion mask for.
+- `stream_id` - ID of stream to delete motion mask for.
 
 <a id="orchid_api.OrchidAPI.get_streams"></a>
 
@@ -667,7 +667,7 @@ Get a stream.
 
 **Arguments**:
 
-  `stream_id` - ID of stream to retrieve.
+- `stream_id` - ID of stream to retrieve.
 
 <a id="orchid_api.OrchidAPI.get_stream_frame"></a>
 
@@ -681,16 +681,16 @@ Get a stream JPEG frame.
 
 **Arguments**:
 
-  `stream_id` - ID of stream to retrieve frame for.
+- `stream_id` - ID of stream to retrieve frame for.
   
-  `time`      - Frame time (server time in epoch milliseconds, UTC). `0` is a special value for
+- `time` - Frame time (server time in epoch milliseconds, UTC). 0 is a special value for
   retrieving first frame from the latest archive.
   
-  `height`    - Desired frame height. `0` is a special value for using the streams native resolution.
+- `height` - Desired frame height. 0 is a special value for using the streams native resolution.
   
-  `width`     - Desired frame width. 0 is a special value for using the streams native resolution.
+- `width` - Desired frame width. 0 is a special value for using the streams native resolution.
   
-  `fallback`  - If true, on errors, a black GIF wil be returned. Otherwise on errors, an error code
+- `fallback` - If true, on errors, a black GIF wil be returned. Otherwise on errors, an error code
   is returned.
 
 <a id="orchid_api.OrchidAPI.export_stream"></a>
@@ -705,13 +705,13 @@ Export media from a stream.
 
 **Arguments**:
 
-  `stream_id` - ID of stream to export media for.
+- `stream_id` - ID of stream to export media for.
   
-  `start`     - Start time (server time in epoch milliseconds, UTC).
+- `start` - Start time (server time in epoch milliseconds, UTC).
   
-  `stop`      - Stop time (server time in epoch milliseconds, UTC).
+- `stop` - Stop time (server time in epoch milliseconds, UTC).
   
-  `container` - Video export format: [`mkv`, `mov`, `mp4`, `dewarp`, `dewarp-parent`].
+- `container` - Video export format: [mkv, mov, mp4, dewarp, dewarp-parent].
 
 <a id="orchid_api.OrchidAPI.get_stream_metadata"></a>
 
@@ -725,9 +725,9 @@ Get a camera stream's metadata.
 
 **Arguments**:
 
-  `camera_id` - ID of camera that stream is associated to.
+- `camera_id` - ID of camera that stream is associated to.
   
-  `stream_id` - ID of stream to retrieve metadata for.
+- `stream_id` - ID of stream to retrieve metadata for.
 
 <a id="orchid_api.OrchidAPI.get_stream_status"></a>
 
@@ -741,7 +741,7 @@ Get status of a stream.
 
 **Arguments**:
 
-  `stream_id` - ID of stream to retrieve status for.
+- `stream_id` - ID of stream to retrieve status for.
 
 <a id="orchid_api.OrchidAPI.get_archives"></a>
 
@@ -755,14 +755,14 @@ Get a list of existing archives.
 
 **Arguments**:
 
-  `start`     - Start (server time in epoch milliseconds, UTC). If `0`, defaults
+- `start` - Start (server time in epoch milliseconds, UTC). If 0, defaults
   to current epoch time in milliseconds, UTC.
   
-  `take`      - Number of archives to return.
+- `take` - Number of archives to return.
   
-  `offset`    - Number of archives to skip.
+- `offset` - Number of archives to skip.
   
-  `stream_id` - If specified, only retrieve archives associated to stream.
+- `stream_id` - If specified, only retrieve archives associated to stream.
 
 <a id="orchid_api.OrchidAPI.get_archive"></a>
 
@@ -776,7 +776,7 @@ Get an archive by ID.
 
 **Arguments**:
 
-  `archive_id` - ID of archive to retrieve.
+- `archive_id` - ID of archive to retrieve.
 
 <a id="orchid_api.OrchidAPI.download_archive"></a>
 
@@ -790,7 +790,7 @@ Download an archive by ID.
 
 **Arguments**:
 
-  `archive_id` - ID of archive to download.
+- `archive_id` - ID of archive to download.
 
 <a id="orchid_api.OrchidAPI.get_archives_per_day"></a>
 
@@ -831,25 +831,24 @@ Create a new low-bandwidth mode (LBM) stream.
 
 **Arguments**:
 
-  `stream_id`  - ID of stream to create LBM session for.
+- `stream_id` - ID of stream to create LBM session for.
   
-  `height`     - Desired resolution height.
+- `height` - Desired resolution height.
   
-  `width`      - Desired resolution width.
+- `width` - Desired resolution width.
   
-  `start`      - Start time of stream (server time, epoch milliseconds). Use
-  `0` to specify live.
+- `start` - Start time of stream (server time, epoch milliseconds). Use
+  0 to specify live.
   
-  `sync`       - If true, apply time offset to video to account for request latency.
+- `sync` - If true, apply time offset to video to account for request latency.
   Only applies to playback streams.
   
-  `rate`       - Rate of playback stream.
+- `rate` - Rate of playback stream.
   
-  `wait_thres` - The max time allowed (milliseconds) to wait for media to start playing or
+- `wait_thres` - The max time allowed (milliseconds) to wait for media to start playing or
   to bridge a media gap.
   
-  `transport`  - Mode for transmitting frames: [`http`, `websocket-base64`].
-  `websocket-base64`.
+  transport : Mode for transmitting frames: [http, websocket-base64].
 
 <a id="orchid_api.OrchidAPI.get_lbm_stream"></a>
 
@@ -863,7 +862,7 @@ Get a low-bandwidth mode stream by ID.
 
 **Arguments**:
 
-  `stream_uuid` - ID of low-bandwidth mode stream.
+- `stream_uuid` - ID of low-bandwidth mode stream.
 
 <a id="orchid_api.OrchidAPI.delete_lbm_stream"></a>
 
@@ -877,7 +876,7 @@ Delete an LBM stream.
 
 **Arguments**:
 
-  `stream_uuid` - ID of low-bandwidth mode stream to delete.
+- `stream_uuid` - ID of low-bandwidth mode stream to delete.
 
 <a id="orchid_api.OrchidAPI.get_lbm_frame"></a>
 
@@ -891,7 +890,7 @@ Get a low-bandwidth mode stream JPEG frame from a session created for `http` mod
 
 **Arguments**:
 
-  `stream_uuid` - ID of low-bandwidth mode stream to get frame for.
+- `stream_uuid` - ID of low-bandwidth mode stream to get frame for.
 
 <a id="orchid_api.OrchidAPI.get_server_events"></a>
 
@@ -909,17 +908,17 @@ Get server events.
 
 **Arguments**:
 
-  `start`       - Start time (server time in epoch milliseconds, UTC).
+- `start` - Start time (server time in epoch milliseconds, UTC).
   
-  `stop`        - Stop time (server time in epoch milliseconds, UTC). If not specified
+- `stop` - Stop time (server time in epoch milliseconds, UTC). If not specified
   default to time of latest server event available.
   
-  `count`       - Number of events to return. If not specified, return all events.
+- `count` - Number of events to return. If not specified, return all events.
   
-  `server_ids`  - Comma separated string of server IDs. If specified, only retrieve events
+- `server_ids` - Comma separated string of server IDs. If specified, only retrieve events
   for listed servers.
   
-  `event_types` - Comma servers string of event types. If specified, only retrieve the
+- `event_types` - Comma servers string of event types. If specified, only retrieve the
   listed event types.
 
 <a id="orchid_api.OrchidAPI.get_stream_events"></a>
@@ -938,17 +937,17 @@ Get camera stream events.
 
 **Arguments**:
 
-  `start`       - Start time (server time in epoch milliseconds, UTC).
+- `start` - Start time (server time in epoch milliseconds, UTC).
   
-  `stop`        - Stop time (server time in epoch milliseconds, UTC). If not specified
+- `stop` - Stop time (server time in epoch milliseconds, UTC). If not specified
   default to time of latest server event available.
   
-  `count`       - Number of events to return. If not specified, return all events.
+- `count` - Number of events to return. If not specified, return all events.
   
-  `stream_ids`  - Comma separated string of stream IDs. If specified, only retrieve events
+- `stream_ids` - Comma separated string of stream IDs. If specified, only retrieve events
   for listed streams.
   
-  `event_types` - Comma servers string of event types. If specified, only retrieve the
+- `event_types` - Comma servers string of event types. If specified, only retrieve the
   listed event types.
 
 <a id="orchid_api.OrchidAPI.get_camera_stream_event_histogram"></a>
@@ -967,18 +966,18 @@ Get camera stream event histogram.
 
 **Arguments**:
 
-  `start`       - Start time (server time in epoch milliseconds, UTC).
+- `start` - Start time (server time in epoch milliseconds, UTC).
   
-  `stop`        - Stop time (server time in epoch milliseconds, UTC).
+- `stop` - Stop time (server time in epoch milliseconds, UTC).
   
-  `min_segment` - Segment size of binned results.
- 
-  `stream_ids`  - Comma separated string of stream IDs. If specified, only retrieve events
+- `min_segment` - Segment size of binned results.
+  
+- `stream_ids` - Comma separated string of stream IDs. If specified, only retrieve events
   for listed streams.
   
-  `event_types` - Comma servers string of event types. If specified, only retrieve the
+- `event_types` - Comma servers string of event types. If specified, only retrieve the
   listed event types.
-  
+
 <a id="orchid_api.OrchidAPI.get_server_logs"></a>
 
 #### get\_server\_logs
@@ -991,12 +990,12 @@ Get server logs.
 
 **Arguments**:
 
-  `log_format` - Log file format: [`gzip`, `text`].
+- `log_format` - Log file format: [gzip, text].
   
-  `start`      - Start time (server time in epoch milliseconds, UTC).
+- `start` - Start time (server time in epoch milliseconds, UTC).
   If not specified, use start time of earliest server log file.
   
-  `stop`       - Stop time (server time in epoch milliseconds, UTC).
+- `stop` - Stop time (server time in epoch milliseconds, UTC).
   If not specified, use stop time of the latest server log file.
 
 <a id="orchid_api.OrchidAPI.get_users"></a>
@@ -1021,11 +1020,11 @@ Create a new user.
 
 **Arguments**:
 
-  `username` - Name of new user.
-
-  `password` - Password for new user.
-
-  `role`     - Permission scope: [`Administrator`, `Manager`, `Live Viewer`, `Viewer`].
+- `username` - Name of new user.
+  
+- `password` - Password for new user.
+  
+- `role` - Permission scope: [Administrator, Manager, Live Viewer, Viewer].
 
 <a id="orchid_api.OrchidAPI.get_user"></a>
 
@@ -1039,7 +1038,7 @@ Get a user by ID.
 
 **Arguments**:
 
-  `user_id` - ID of user to retrieve.
+- `user_id` - ID of user to retrieve.
 
 <a id="orchid_api.OrchidAPI.update_user"></a>
 
@@ -1053,9 +1052,9 @@ Update a user (full update).
 
 **Arguments**:
 
-  `user_id` - ID of user to update.
+- `user_id` - ID of user to update.
   
-  `body`    - User resource body.
+- `body` - User resource body.
 
 <a id="orchid_api.OrchidAPI.patch_user"></a>
 
@@ -1069,9 +1068,9 @@ Patch a user (partial update).
 
 **Arguments**:
 
-  `user_id` - ID of user to update.
+- `user_id` - ID of user to update.
   
-  `body`    - User resource body.
+- `body` - User resource body.
 
 <a id="orchid_api.OrchidAPI.delete_user"></a>
 
@@ -1085,7 +1084,7 @@ Delete a user.
 
 **Arguments**:
 
-  `user_id` - ID of user to delete.
+- `user_id` - ID of user to delete.
 
 <a id="orchid_api.OrchidAPI.get_servers"></a>
 
@@ -1109,7 +1108,7 @@ Get a server by ID.
 
 **Arguments**:
 
-  `server_id` - ID of server to retrieve.
+- `server_id` - ID of server to retrieve.
 
 <a id="orchid_api.OrchidAPI.generate_server_report"></a>
 
@@ -1123,9 +1122,9 @@ Generate a server report.
 
 **Arguments**:
 
-  `start` - Start time (server time in epoch milliseconds, UTC).
+- `start` - Start time (server time in epoch milliseconds, UTC).
   
-  `stop`  - Stop time (server time in epoch milliseconds, UTC).
+- `stop` - Stop time (server time in epoch milliseconds, UTC).
 
 <a id="orchid_api.OrchidAPI.get_server_disk_utilization"></a>
 
@@ -1149,9 +1148,9 @@ Get the server's database errors.
 
 **Arguments**:
 
-  `start` - Start time (server time in epoch milliseconds, UTC).
+- `start` - Start time (server time in epoch milliseconds, UTC).
   
-  `stop`  - Stop time (server in epoch milliseconds, UTC). If not specified.
+- `stop` - Stop time (server in epoch milliseconds, UTC). If not specified.
   All database faults after start time will be retrieved.
 
 <a id="orchid_api.OrchidAPI.get_server_properties_info"></a>
@@ -1186,7 +1185,7 @@ Update the server properties file.
 
 **Arguments**:
 
-  `body` - Server properties resource body.
+- `body` - Server properties resource body.
 
 <a id="orchid_api.OrchidAPI.check_properties_confirmation"></a>
 
@@ -1210,7 +1209,7 @@ Confirm changes made to the properties file.
 
 **Arguments**:
 
-  `confirmed` - If true, confirm the properties. Otherwise the
+- `confirmed` - If true, confirm the properties. Otherwise the
   server will revert to the previously configured settings.
 
 <a id="orchid_api.OrchidAPI.get_storages"></a>
@@ -1235,7 +1234,7 @@ List an archive storage location by ID.
 
 **Arguments**:
 
-  `storage_id` - ID of storage location to retrieve.
+- `storage_id` - ID of storage location to retrieve.
 
 <a id="orchid_api.OrchidAPI.get_license_session"></a>
 
@@ -1259,7 +1258,7 @@ Create a new license session.
 
 **Arguments**:
 
-  `orchid_license` - New Orchid Core VMS license to upload.
+- `orchid_license` - New Orchid Core VMS license to upload.
 
 <a id="orchid_api.OrchidAPI.delete_license_session"></a>
 
@@ -1303,6 +1302,6 @@ Upload a signed user-interface (UI) update package.
 
 **Arguments**:
 
-  `ui_package` - ZIP package in bytes to upload. Note that this package must be
+- `ui_package` - ZIP package in bytes to upload. Note that this package must be
   signed by IPConfigure, Inc.
 
