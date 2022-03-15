@@ -14,6 +14,11 @@ class BearerAuth(requests.auth.AuthBase):
     """Bearer authorization handler for requests library."""
 
     def __init__(self, token):
+        """BearerAuth constructor.
+
+        Parameters:
+        token: Bearer authentication token.
+        """
         self.token = token
 
     def __call__(self, request):
@@ -24,6 +29,21 @@ class OrchidAPI:
     """Orchid Core VMS API wrapper implementation."""
 
     def __init__(self, address, auth=None, user=None, password=None, connection_timeout=30):
+        """OrchidAPI constructor.
+
+        Parameters:
+        address: Address of the Orchid Core VMS server.
+
+        auth: Orchid Core VMS Authentication. Can be of form `('user', 'password')` for basic
+        authentication, or `BearerAuth(token)` for bearer authentication. If `user` and
+        `password` are supplied, this parameter is ignored.
+
+        user: An Orchid Core VMS user.
+
+        password: The password to `user`.
+
+        connection_timeout: Timeout for HTTP requests.
+        """
         self.server_address = address
         self.session = requests.Session()
         if user and password:

@@ -17,6 +17,20 @@ class BearerAuth(requests.auth.AuthBase)
 
 Bearer authorization handler for requests library.
 
+<a id="orchid_api.BearerAuth.__init__"></a>
+
+#### \_\_init\_\_
+
+```python
+def __init__(token)
+```
+
+BearerAuth constructor.
+
+**Arguments**:
+
+- `token` - Bearer authentication token.
+
 <a id="orchid_api.OrchidAPI"></a>
 
 ## OrchidAPI Objects
@@ -26,6 +40,34 @@ class OrchidAPI()
 ```
 
 Orchid Core VMS API wrapper implementation.
+
+<a id="orchid_api.OrchidAPI.__init__"></a>
+
+#### \_\_init\_\_
+
+```python
+def __init__(address,
+             auth=None,
+             user=None,
+             password=None,
+             connection_timeout=30)
+```
+
+OrchidAPI constructor.
+
+**Arguments**:
+
+- `address` - Address of the Orchid Core VMS server.
+  
+- `auth` - Orchid Core VMS Authentication. Can be of form `('user', 'password')` for basic
+  authentication, or `BearerAuth(token)` for bearer authentication. If `user` and
+  `password` are supplied, this parameter is ignored.
+  
+- `user` - An Orchid Core VMS user.
+  
+- `password` - The password to `user`.
+  
+- `connection_timeout` - Timeout for HTTP requests.
 
 <a id="orchid_api.OrchidAPI.set_bearer_token"></a>
 
