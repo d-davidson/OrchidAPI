@@ -575,7 +575,7 @@ class OrchidAPI:
         wait_thres: The max time allowed (milliseconds) to wait for media to start playing or
         to bridge a media gap.
 
-        transport : Mode for transmitting frames: [http, websocket-base64].
+        transport: Mode for transmitting frames: [http, websocket-base64].
         """
         body = {
             'streamId': stream_id,

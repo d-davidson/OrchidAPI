@@ -848,7 +848,7 @@ Create a new low-bandwidth mode (LBM) stream.
 - `wait_thres` - The max time allowed (milliseconds) to wait for media to start playing or
   to bridge a media gap.
   
-  transport : Mode for transmitting frames: [http, websocket-base64].
+- `transport` - Mode for transmitting frames: [http, websocket-base64].
 
 <a id="orchid_api.OrchidAPI.get_lbm_stream"></a>
 
