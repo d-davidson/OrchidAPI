@@ -10,7 +10,7 @@ pip3 install <path/to/OrchidAPI>
 ```
 
 # Simple Example
-```
+```python
 from orchid_api import OrchidAPI
 
 api = OrchidAPI('https://your-orchid-server:8443', user='thunder', password='P@ssword')

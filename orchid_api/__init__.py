@@ -576,7 +576,7 @@ class OrchidAPI:
         Parameters:
         start       - Start time (server time in epoch milliseconds, UTC).
         stop        - Stop time (server time in epoch milliseconds, UTC). If not specified
-                      default to time of latest server event available."
+                      default to time of latest server event available.
         count       - Number of events to return. If not specified, return all events.
         server_ids  - Comma separated string of server IDs. If specified, only retrieve events
                       for listed servers.
@@ -592,7 +592,7 @@ class OrchidAPI:
         Parameters:
         start       - Start time (server time in epoch milliseconds, UTC).
         stop        - Stop time (server time in epoch milliseconds, UTC). If not specified
-                      default to time of latest server event available."
+                      default to time of latest server event available.
         count       - Number of events to return. If not specified, return all events.
         stream_ids  - Comma separated string of stream IDs. If specified, only retrieve events
                       for listed streams.
