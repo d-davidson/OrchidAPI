@@ -47,7 +47,7 @@ class OrchidAPI:
 
         timeout: Timeout (in seconds) for server connections and/or reads. If single value
         is supplied the value sets both connection and read timeout. To set the values
-        separately, specify a tuple of the form: (<connection>, <read>).
+        separately, specify a tuple of the form: (connection, read).
         """
         self.server_address = address
         self.session = requests.Session()

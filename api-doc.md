@@ -71,7 +71,7 @@ OrchidAPI constructor.
   
 - `timeout` - Timeout (in seconds) for server connections and/or reads. If single value
   is supplied the value sets both connection and read timeout. To set the values
-  separately, specify a tuple of the form: (<connection>, <read>).
+  separately, specify a tuple of the form: (connection, read).
 
 <a id="orchid_api.OrchidAPI.set_bearer_token"></a>
 
