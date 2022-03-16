@@ -46,11 +46,13 @@ Orchid Core VMS API wrapper implementation.
 #### \_\_init\_\_
 
 ```python
-def __init__(address: str,
-             auth: Union[BearerAuth, Tuple[str, str]] = None,
-             user: str = None,
-             password: str = None,
-             connection_timeout: int = 30) -> None
+def __init__(
+    address: str,
+    auth: Union[BearerAuth, Tuple[str, str]] = None,
+    user: str = None,
+    password: str = None,
+    timeout: Union[float, Tuple[float, float]] = (30.0, 30.0)
+) -> None
 ```
 
 OrchidAPI constructor.
@@ -67,7 +69,9 @@ OrchidAPI constructor.
   
 - `password` - The password to `user`.
   
-- `connection_timeout` - Timeout for HTTP requests.
+- `timeout` - Timeout (in seconds) for server connections and/or reads. If single value
+  is supplied the value sets both connection and read timeout. To set the values
+  separately, specify a tuple of the form: (<connection>, <read>).
 
 <a id="orchid_api.OrchidAPI.set_bearer_token"></a>
 

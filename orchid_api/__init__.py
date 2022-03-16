@@ -30,8 +30,8 @@ class BearerAuth(requests.auth.AuthBase):
 class OrchidAPI:
     """Orchid Core VMS API wrapper implementation."""
 
-    def __init__(self, address: str, auth: Union[BearerAuth, Tuple[str, str]]=None,
-                 user: str=None, password: str=None, connection_timeout: int=30) -> None:
+    def __init__(self, address: str, auth: Union[BearerAuth, Tuple[str, str]]=None, user: str=None,
+                 password: str=None, timeout: Union[float, Tuple[float, float]]=(30.0, 30.0)) -> None:
         """OrchidAPI constructor.
 
         Parameters:
@@ -45,15 +45,14 @@ class OrchidAPI:
 
         password: The password to `user`.
 
-        connection_timeout: Timeout for HTTP requests.
+        timeout: Timeout (in seconds) for server connections and/or reads. If single value
+        is supplied the value sets both connection and read timeout. To set the values
+        separately, specify a tuple of the form: (<connection>, <read>).
         """
         self.server_address = address
         self.session = requests.Session()
-        if user and password:
-            self.session.auth = (user, password)
-        else:
-            self.session.auth = auth
-        self.connection_timeout = connection_timeout
+        self.session.auth = (user, password) if user and password else auth
+        self.timeout = timeout if isinstance(timeout, tuple) else (timeout, timeout)
 
     def __del__(self) -> None:
         self.session.close()
@@ -947,7 +946,7 @@ class OrchidAPI:
         data: Request body data.
         """
         response = self.session.request(method, f'{self.server_address}/service/{path.lstrip("/")}',
-                                        data=data, timeout=self.connection_timeout)
+                                        data=data, timeout=self.timeout)
         content_type = response.headers['Content-Type']
         if 'application/json' in content_type:
             response.body = response.json()
