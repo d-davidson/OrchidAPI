@@ -22,7 +22,7 @@ Bearer authorization handler for requests library.
 #### \_\_init\_\_
 
 ```python
-def __init__(token)
+def __init__(token: str) -> None
 ```
 
 BearerAuth constructor.
@@ -46,11 +46,11 @@ Orchid Core VMS API wrapper implementation.
 #### \_\_init\_\_
 
 ```python
-def __init__(address,
-             auth=None,
-             user=None,
-             password=None,
-             connection_timeout=30)
+def __init__(address: str,
+             auth: Union[BearerAuth, Tuple[str, str]] = None,
+             user: str = None,
+             password: str = None,
+             connection_timeout: int = 30) -> None
 ```
 
 OrchidAPI constructor.
@@ -74,7 +74,7 @@ OrchidAPI constructor.
 #### set\_bearer\_token
 
 ```python
-def set_bearer_token(token)
+def set_bearer_token(token: str) -> None
 ```
 
 Set the bearer authorization token for HTTP requests.
@@ -88,7 +88,7 @@ Set the bearer authorization token for HTTP requests.
 #### get\_server\_time
 
 ```python
-def get_server_time(extended=True)
+def get_server_time(extended: bool = True) -> requests.Response
 ```
 
 Get the Orchid Core VMS server time (in epoch milliseconds, UTC).
@@ -103,7 +103,7 @@ Get the Orchid Core VMS server time (in epoch milliseconds, UTC).
 #### get\_trusted\_issuer
 
 ```python
-def get_trusted_issuer()
+def get_trusted_issuer() -> requests.Response
 ```
 
 Retrieve the current trusted issuer.
@@ -113,7 +113,10 @@ Retrieve the current trusted issuer.
 #### create\_trusted\_issuer
 
 ```python
-def create_trusted_issuer(orchid_uuid, secret: bytes, description='', uri='')
+def create_trusted_issuer(orchid_uuid: str,
+                          secret: bytes,
+                          description: str = '',
+                          uri: str = '') -> requests.Response
 ```
 
 Create a trusted issuer.
@@ -133,7 +136,7 @@ Create a trusted issuer.
 #### delete\_trusted\_issuer
 
 ```python
-def delete_trusted_issuer()
+def delete_trusted_issuer() -> requests.Response
 ```
 
 Delete the trusted issuer.
@@ -143,7 +146,7 @@ Delete the trusted issuer.
 #### get\_session\_identity
 
 ```python
-def get_session_identity()
+def get_session_identity() -> requests.Response
 ```
 
 Get the identity of current session.
@@ -153,7 +156,7 @@ Get the identity of current session.
 #### get\_session\_info
 
 ```python
-def get_session_info()
+def get_session_info() -> requests.Response
 ```
 
 Get the current session information.
@@ -163,7 +166,7 @@ Get the current session information.
 #### delete\_current\_session
 
 ```python
-def delete_current_session()
+def delete_current_session() -> requests.Response
 ```
 
 Delete the current session.
@@ -173,7 +176,10 @@ Delete the current session.
 #### create\_user\_session
 
 ```python
-def create_user_session(username, password, expires_in=3600, cookie='session')
+def create_user_session(username: str,
+                        password: str,
+                        expires_in: int = 3600,
+                        cookie: str = 'session') -> requests.Response
 ```
 
 Create a new user session.
@@ -193,10 +199,10 @@ Create a new user session.
 #### create\_remote\_session
 
 ```python
-def create_remote_session(session_name,
-                          expires_in=3600,
-                          cookie='session',
-                          scope: dict = None)
+def create_remote_session(session_name: str,
+                          expires_in: int = 3600,
+                          cookie: str = 'session',
+                          scope: dict = None) -> requests.Response
 ```
 
 Create a new remote session.
@@ -216,7 +222,7 @@ Create a new remote session.
 #### get\_sessions
 
 ```python
-def get_sessions(session_type=None)
+def get_sessions(session_type: str = None) -> requests.Response
 ```
 
 Get all sessions associated to Orchid Core VMS server.
@@ -231,7 +237,7 @@ Get all sessions associated to Orchid Core VMS server.
 #### delete\_sessions
 
 ```python
-def delete_sessions(session_type=None)
+def delete_sessions(session_type: str = None) -> requests.Response
 ```
 
 Delete all sessions.
@@ -246,7 +252,7 @@ Delete all sessions.
 #### get\_session
 
 ```python
-def get_session(session_id: str)
+def get_session(session_id: str) -> requests.Response
 ```
 
 Get a session by ID.
@@ -260,7 +266,7 @@ Get a session by ID.
 #### delete\_session
 
 ```python
-def delete_session(session_id)
+def delete_session(session_id: str) -> requests.Response
 ```
 
 Delete a session by ID.
@@ -274,7 +280,7 @@ Delete a session by ID.
 #### get\_discovered\_cameras
 
 ```python
-def get_discovered_cameras()
+def get_discovered_cameras() -> requests.Response
 ```
 
 Get all of the camera discovered via ONVIF autodiscovery.
@@ -284,7 +290,7 @@ Get all of the camera discovered via ONVIF autodiscovery.
 #### get\_orchids
 
 ```python
-def get_orchids()
+def get_orchids() -> requests.Response
 ```
 
 Get all the discovered Orchid Core VMS servers.
@@ -294,7 +300,7 @@ Get all the discovered Orchid Core VMS servers.
 #### get\_orchid
 
 ```python
-def get_orchid(orchid_id=1)
+def get_orchid(orchid_id: int = 1) -> requests.Response
 ```
 
 Get a discovered Orchid Core VMS
@@ -308,7 +314,7 @@ Get a discovered Orchid Core VMS
 #### get\_cameras
 
 ```python
-def get_cameras()
+def get_cameras() -> requests.Response
 ```
 
 Get all registered cameras.
@@ -318,11 +324,11 @@ Get all registered cameras.
 #### register\_onvif\_camera
 
 ```python
-def register_onvif_camera(address,
-                          camera_user,
-                          password,
-                          name=None,
-                          https=False)
+def register_onvif_camera(address: str,
+                          camera_user: str,
+                          password: str,
+                          name: str = None,
+                          https: bool = False) -> requests.Response
 ```
 
 Register an ONVIF compatible camera.
@@ -344,7 +350,10 @@ Register an ONVIF compatible camera.
 #### register\_rtsp\_camera
 
 ```python
-def register_rtsp_camera(uri, camera_user, password, name=None)
+def register_rtsp_camera(uri: str,
+                         camera_user: str,
+                         password: str,
+                         name: str = None) -> requests.Response
 ```
 
 Register a generic RTSP camera.
@@ -364,7 +373,7 @@ Register a generic RTSP camera.
 #### get\_camera
 
 ```python
-def get_camera(camera_id)
+def get_camera(camera_id: int) -> requests.Response
 ```
 
 Get a camera by ID.
@@ -378,7 +387,7 @@ Get a camera by ID.
 #### patch\_camera
 
 ```python
-def patch_camera(camera_id, body)
+def patch_camera(camera_id: int, body: dict) -> requests.Response
 ```
 
 Patch a camera (partial update).
@@ -394,7 +403,7 @@ Patch a camera (partial update).
 #### delete\_camera
 
 ```python
-def delete_camera(camera_id)
+def delete_camera(camera_id: int) -> requests.Response
 ```
 
 Delete a camera.
@@ -408,7 +417,7 @@ Delete a camera.
 #### verify\_camera
 
 ```python
-def verify_camera(camera_id)
+def verify_camera(camera_id: int) -> requests.Response
 ```
 
 Verify a camera is pingable.
@@ -422,7 +431,7 @@ Verify a camera is pingable.
 #### get\_cameras\_disk\_usage
 
 ```python
-def get_cameras_disk_usage()
+def get_cameras_disk_usage() -> requests.Response
 ```
 
 Get the archive disk usage of all cameras.
@@ -442,7 +451,7 @@ Get a list if IANA to POSIX timezone mappings.
 #### get\_camera\_ptz\_position
 
 ```python
-def get_camera_ptz_position(camera_id)
+def get_camera_ptz_position(camera_id: int) -> requests.Response
 ```
 
 Get a camera's current PTZ position.
@@ -456,7 +465,7 @@ Get a camera's current PTZ position.
 #### set\_camera\_ptz\_position
 
 ```python
-def set_camera_ptz_position(camera_id, body)
+def set_camera_ptz_position(camera_id: int, body: dict) -> requests.Response
 ```
 
 Set a camera's PTZ position.
@@ -472,7 +481,7 @@ Set a camera's PTZ position.
 #### get\_camera\_ptz\_presets
 
 ```python
-def get_camera_ptz_presets(camera_id)
+def get_camera_ptz_presets(camera_id: int) -> requests.Response
 ```
 
 Get a list of a camera's PTZ presets.
@@ -486,7 +495,8 @@ Get a list of a camera's PTZ presets.
 #### set\_camera\_ptz\_preset
 
 ```python
-def set_camera_ptz_preset(camera_id, preset_name)
+def set_camera_ptz_preset(camera_id: int,
+                          preset_name: str) -> requests.Response
 ```
 
 Set a camera's PTZ preset at the camera's current PTZ position.
@@ -502,7 +512,8 @@ Set a camera's PTZ preset at the camera's current PTZ position.
 #### delete\_camera\_ptz\_preset
 
 ```python
-def delete_camera_ptz_preset(camera_id, preset_token: str)
+def delete_camera_ptz_preset(camera_id: int,
+                             preset_token: str) -> requests.Response
 ```
 
 Delete the PTZ preset on a camera.
@@ -518,7 +529,7 @@ Delete the PTZ preset on a camera.
 #### get\_camera\_streams
 
 ```python
-def get_camera_streams(camera_id)
+def get_camera_streams(camera_id: int) -> requests.Response
 ```
 
 List all the stream's for a camera.
@@ -532,7 +543,7 @@ List all the stream's for a camera.
 #### register\_stream
 
 ```python
-def register_stream(camera_id, body)
+def register_stream(camera_id: int, body: dict) -> requests.Response
 ```
 
 Register a new stream for a camera.
@@ -548,7 +559,7 @@ Register a new stream for a camera.
 #### get\_camera\_stream
 
 ```python
-def get_camera_stream(camera_id, stream_id)
+def get_camera_stream(camera_id: int, stream_id: int) -> requests.Response
 ```
 
 Get a camera's stream.
@@ -564,7 +575,8 @@ Get a camera's stream.
 #### patch\_stream
 
 ```python
-def patch_stream(camera_id, stream_id, body)
+def patch_stream(camera_id: int, stream_id: int,
+                 body: dict) -> requests.Response
 ```
 
 Patch a camera's stream (partial update).
@@ -582,7 +594,8 @@ Patch a camera's stream (partial update).
 #### update\_stream
 
 ```python
-def update_stream(camera_id, stream_id, body)
+def update_stream(camera_id: int, stream_id: int,
+                  body: dict) -> requests.Response
 ```
 
 Update a camera's stream (full update).
@@ -600,7 +613,7 @@ Update a camera's stream (full update).
 #### delete\_stream
 
 ```python
-def delete_stream(camera_id, stream_id)
+def delete_stream(camera_id: int, stream_id: int) -> requests.Response
 ```
 
 Delete a camera's stream.
@@ -616,7 +629,7 @@ Delete a camera's stream.
 #### restart\_stream
 
 ```python
-def restart_stream(camera_id, stream_id)
+def restart_stream(camera_id: int, stream_id: int) -> requests.Response
 ```
 
 Restart a camera stream.
@@ -632,7 +645,8 @@ Restart a camera stream.
 #### get\_stream\_motion\_mask
 
 ```python
-def get_stream_motion_mask(camera_id, stream_id)
+def get_stream_motion_mask(camera_id: int,
+                           stream_id: int) -> requests.Response
 ```
 
 Get a camera stream's motion mask.
@@ -648,7 +662,8 @@ Get a camera stream's motion mask.
 #### upload\_stream\_motion\_mask
 
 ```python
-def upload_stream_motion_mask(camera_id, stream_id, mask: bytes)
+def upload_stream_motion_mask(camera_id: int, stream_id: int,
+                              mask: bytes) -> requests.Response
 ```
 
 Upload a camera stream's motion mask.
@@ -666,7 +681,8 @@ Upload a camera stream's motion mask.
 #### delete\_stream\_motion\_mask
 
 ```python
-def delete_stream_motion_mask(camera_id, stream_id)
+def delete_stream_motion_mask(camera_id: int,
+                              stream_id: int) -> requests.Response
 ```
 
 Delete a camera stream's motion mask.
@@ -682,7 +698,7 @@ Delete a camera stream's motion mask.
 #### get\_streams
 
 ```python
-def get_streams()
+def get_streams() -> requests.Response
 ```
 
 List all registered streams.
@@ -702,7 +718,7 @@ List the status of all registered streams.
 #### get\_stream
 
 ```python
-def get_stream(stream_id)
+def get_stream(stream_id: int) -> requests.Response
 ```
 
 Get a stream.
@@ -716,7 +732,11 @@ Get a stream.
 #### get\_stream\_frame
 
 ```python
-def get_stream_frame(stream_id, time=0, height=0, width=0, fallback=False)
+def get_stream_frame(stream_id: int,
+                     time: int = 0,
+                     height: int = 0,
+                     width: int = 0,
+                     fallback: bool = False) -> requests.Response
 ```
 
 Get a stream JPEG frame.
@@ -740,7 +760,10 @@ Get a stream JPEG frame.
 #### export\_stream
 
 ```python
-def export_stream(stream_id, start, stop, container='mkv')
+def export_stream(stream_id: int,
+                  start: int,
+                  stop: int,
+                  container: str = 'mkv') -> requests.Response
 ```
 
 Export media from a stream.
@@ -760,7 +783,7 @@ Export media from a stream.
 #### get\_stream\_metadata
 
 ```python
-def get_stream_metadata(camera_id, stream_id)
+def get_stream_metadata(camera_id: int, stream_id: int) -> requests.Response
 ```
 
 Get a camera stream's metadata.
@@ -776,7 +799,7 @@ Get a camera stream's metadata.
 #### get\_stream\_status
 
 ```python
-def get_stream_status(stream_id)
+def get_stream_status(stream_id: int) -> requests.Response
 ```
 
 Get status of a stream.
@@ -790,7 +813,10 @@ Get status of a stream.
 #### get\_archives
 
 ```python
-def get_archives(start=0, take=100, offset=0, stream_id=None)
+def get_archives(start: int = 0,
+                 take: int = 100,
+                 offset: int = 0,
+                 stream_id: int = None) -> requests.Response
 ```
 
 Get a list of existing archives.
@@ -811,7 +837,7 @@ Get a list of existing archives.
 #### get\_archive
 
 ```python
-def get_archive(archive_id)
+def get_archive(archive_id: int) -> requests.Response
 ```
 
 Get an archive by ID.
@@ -825,7 +851,7 @@ Get an archive by ID.
 #### download\_archive
 
 ```python
-def download_archive(archive_id)
+def download_archive(archive_id: int) -> requests.Response
 ```
 
 Download an archive by ID.
@@ -839,7 +865,7 @@ Download an archive by ID.
 #### get\_archives\_per\_day
 
 ```python
-def get_archives_per_day()
+def get_archives_per_day() -> requests.Response
 ```
 
 Get a count of archives generated, per day.
@@ -849,7 +875,7 @@ Get a count of archives generated, per day.
 #### get\_lbm\_streams
 
 ```python
-def get_lbm_streams()
+def get_lbm_streams() -> requests.Response
 ```
 
 List all currently active low-bandwidth streams.
@@ -859,14 +885,15 @@ List all currently active low-bandwidth streams.
 #### create\_lbm\_stream
 
 ```python
-def create_lbm_stream(stream_id,
-                      height,
-                      width,
-                      start=0,
-                      sync=False,
-                      rate=1.0,
-                      wait_thres=2000,
-                      transport='websocket-base64')
+def create_lbm_stream(
+        stream_id: int,
+        height: int,
+        width: int,
+        start: int = 0,
+        sync: bool = False,
+        rate: float = 1.0,
+        wait_thres: int = 2000,
+        transport: str = 'websocket-base64') -> requests.Response
 ```
 
 Create a new low-bandwidth mode (LBM) stream.
@@ -897,7 +924,7 @@ Create a new low-bandwidth mode (LBM) stream.
 #### get\_lbm\_stream
 
 ```python
-def get_lbm_stream(stream_uuid: str)
+def get_lbm_stream(stream_uuid: str) -> requests.Response
 ```
 
 Get a low-bandwidth mode stream by ID.
@@ -911,7 +938,7 @@ Get a low-bandwidth mode stream by ID.
 #### delete\_lbm\_stream
 
 ```python
-def delete_lbm_stream(stream_uuid: str)
+def delete_lbm_stream(stream_uuid: str) -> requests.Response
 ```
 
 Delete an LBM stream.
@@ -925,7 +952,7 @@ Delete an LBM stream.
 #### get\_lbm\_frame
 
 ```python
-def get_lbm_frame(stream_uuid: str)
+def get_lbm_frame(stream_uuid: str) -> requests.Response
 ```
 
 Get a low-bandwidth mode stream JPEG frame from a session created for `http` mode.
@@ -939,11 +966,11 @@ Get a low-bandwidth mode stream JPEG frame from a session created for `http` mod
 #### get\_server\_events
 
 ```python
-def get_server_events(start,
-                      stop=None,
-                      count=None,
-                      server_ids=None,
-                      event_types=None)
+def get_server_events(start: int,
+                      stop: int = None,
+                      count: int = None,
+                      server_ids: str = None,
+                      event_types: str = None) -> requests.Response
 ```
 
 Get server events.
@@ -960,7 +987,7 @@ Get server events.
 - `server_ids` - Comma separated string of server IDs. If specified, only retrieve events
   for listed servers.
   
-- `event_types` - Comma servers string of event types. If specified, only retrieve the
+- `event_types` - Comma separated string of event types. If specified, only retrieve the
   listed event types.
 
 <a id="orchid_api.OrchidAPI.get_stream_events"></a>
@@ -968,11 +995,11 @@ Get server events.
 #### get\_stream\_events
 
 ```python
-def get_stream_events(start,
-                      stop=None,
-                      count=None,
-                      stream_ids=None,
-                      event_types=None)
+def get_stream_events(start: int,
+                      stop: int = None,
+                      count: int = None,
+                      stream_ids: int = None,
+                      event_types: int = None) -> requests.Response
 ```
 
 Get camera stream events.
@@ -989,7 +1016,7 @@ Get camera stream events.
 - `stream_ids` - Comma separated string of stream IDs. If specified, only retrieve events
   for listed streams.
   
-- `event_types` - Comma servers string of event types. If specified, only retrieve the
+- `event_types` - Comma separated string of event types. If specified, only retrieve the
   listed event types.
 
 <a id="orchid_api.OrchidAPI.get_camera_stream_event_histogram"></a>
@@ -997,11 +1024,12 @@ Get camera stream events.
 #### get\_camera\_stream\_event\_histogram
 
 ```python
-def get_camera_stream_event_histogram(start,
-                                      stop,
-                                      min_segment,
-                                      stream_ids=None,
-                                      event_types=None)
+def get_camera_stream_event_histogram(
+        start: int,
+        stop: int,
+        min_segment: int,
+        stream_ids: str = None,
+        event_types: str = None) -> requests.Response
 ```
 
 Get camera stream event histogram.
@@ -1017,7 +1045,7 @@ Get camera stream event histogram.
 - `stream_ids` - Comma separated string of stream IDs. If specified, only retrieve events
   for listed streams.
   
-- `event_types` - Comma servers string of event types. If specified, only retrieve the
+- `event_types` - Comma separated string of event types. If specified, only retrieve the
   listed event types.
 
 <a id="orchid_api.OrchidAPI.get_server_logs"></a>
@@ -1025,7 +1053,9 @@ Get camera stream event histogram.
 #### get\_server\_logs
 
 ```python
-def get_server_logs(log_format='gzip', start=None, stop=None)
+def get_server_logs(log_format: str = 'gzip',
+                    start: int = None,
+                    stop: int = None) -> requests.Response
 ```
 
 Get server logs.
@@ -1055,7 +1085,9 @@ Get all users.
 #### create\_user
 
 ```python
-def create_user(username, password, role='Manager')
+def create_user(username: str,
+                password: str,
+                role: str = 'Manager') -> requests.Response
 ```
 
 Create a new user.
@@ -1073,7 +1105,7 @@ Create a new user.
 #### get\_user
 
 ```python
-def get_user(user_id)
+def get_user(user_id: int) -> requests.Response
 ```
 
 Get a user by ID.
@@ -1087,7 +1119,7 @@ Get a user by ID.
 #### update\_user
 
 ```python
-def update_user(user_id, body)
+def update_user(user_id: int, body: dict) -> requests.Response
 ```
 
 Update a user (full update).
@@ -1103,7 +1135,7 @@ Update a user (full update).
 #### patch\_user
 
 ```python
-def patch_user(user_id, body)
+def patch_user(user_id: int, body: dict) -> requests.Response
 ```
 
 Patch a user (partial update).
@@ -1119,7 +1151,7 @@ Patch a user (partial update).
 #### delete\_user
 
 ```python
-def delete_user(user_id)
+def delete_user(user_id: int) -> requests.Response
 ```
 
 Delete a user.
@@ -1133,7 +1165,7 @@ Delete a user.
 #### get\_servers
 
 ```python
-def get_servers()
+def get_servers() -> requests.Response
 ```
 
 List all servers.
@@ -1143,7 +1175,7 @@ List all servers.
 #### get\_server
 
 ```python
-def get_server(server_id=1)
+def get_server(server_id: int = 1) -> requests.Response
 ```
 
 Get a server by ID.
@@ -1157,7 +1189,7 @@ Get a server by ID.
 #### generate\_server\_report
 
 ```python
-def generate_server_report(start, stop)
+def generate_server_report(start: int, stop: int) -> requests.Response
 ```
 
 Generate a server report.
@@ -1173,7 +1205,7 @@ Generate a server report.
 #### get\_server\_disk\_utilization
 
 ```python
-def get_server_disk_utilization()
+def get_server_disk_utilization() -> requests.Response
 ```
 
 Get the server disk utilization.
@@ -1183,7 +1215,8 @@ Get the server disk utilization.
 #### get\_server\_database\_faults
 
 ```python
-def get_server_database_faults(start, stop=None)
+def get_server_database_faults(start: int,
+                               stop: int = None) -> requests.Response
 ```
 
 Get the server's database errors.
@@ -1200,7 +1233,7 @@ Get the server's database errors.
 #### get\_server\_properties\_info
 
 ```python
-def get_server_properties_info()
+def get_server_properties_info() -> requests.Response
 ```
 
 Get information on configurable server properites.
@@ -1210,7 +1243,7 @@ Get information on configurable server properites.
 #### get\_server\_properties
 
 ```python
-def get_server_properties()
+def get_server_properties() -> requests.Response
 ```
 
 Get the properties the server is currently configured with.
@@ -1220,7 +1253,7 @@ Get the properties the server is currently configured with.
 #### update\_server\_properties
 
 ```python
-def update_server_properties(body)
+def update_server_properties(body: dict) -> requests.Response
 ```
 
 Update the server properties file.
@@ -1234,7 +1267,7 @@ Update the server properties file.
 #### check\_properties\_confirmation
 
 ```python
-def check_properties_confirmation()
+def check_properties_confirmation() -> requests.Response
 ```
 
 Check if changes made to the properties file needs confirmation.
@@ -1244,7 +1277,7 @@ Check if changes made to the properties file needs confirmation.
 #### confirm\_properties
 
 ```python
-def confirm_properties(confirmed=True)
+def confirm_properties(confirmed: bool = True) -> requests.Response
 ```
 
 Confirm changes made to the properties file.
@@ -1269,7 +1302,7 @@ List all archive storage locations.
 #### get\_storage
 
 ```python
-def get_storage(storage_id=1)
+def get_storage(storage_id: int = 1) -> requests.Response
 ```
 
 List an archive storage location by ID.
@@ -1283,7 +1316,7 @@ List an archive storage location by ID.
 #### get\_license\_session
 
 ```python
-def get_license_session()
+def get_license_session() -> requests.Response
 ```
 
 Get the current Orchid VMS license session.
@@ -1293,7 +1326,7 @@ Get the current Orchid VMS license session.
 #### create\_license\_session
 
 ```python
-def create_license_session(orchid_license)
+def create_license_session(orchid_license: str) -> requests.Response
 ```
 
 Create a new license session.
@@ -1307,7 +1340,7 @@ Create a new license session.
 #### delete\_license\_session
 
 ```python
-def delete_license_session()
+def delete_license_session() -> requests.Response
 ```
 
 Delete the current license session.
@@ -1317,7 +1350,7 @@ Delete the current license session.
 #### get\_endpoints
 
 ```python
-def get_endpoints()
+def get_endpoints() -> requests.Response
 ```
 
 Get all Orchid Core VMS API endpoints.
@@ -1327,7 +1360,7 @@ Get all Orchid Core VMS API endpoints.
 #### get\_version
 
 ```python
-def get_version()
+def get_version() -> requests.Response
 ```
 
 Get version information for Orchid Core VMS install.
@@ -1337,7 +1370,7 @@ Get version information for Orchid Core VMS install.
 #### upload\_ui\_package
 
 ```python
-def upload_ui_package(ui_package: bytes)
+def upload_ui_package(ui_package: bytes) -> requests.Response
 ```
 
 Upload a signed user-interface (UI) update package.
