@@ -945,6 +945,8 @@ class OrchidAPI:
 
         data: Request body data.
         """
+        if isinstance(data, dict):
+            data = json.dumps(data)
         response = self.session.request(method, f'{self.server_address}/service/{path.lstrip("/")}',
                                         data=data, timeout=self.timeout)
         content_type = response.headers['Content-Type']
@@ -962,20 +964,14 @@ class OrchidAPI:
 
     def _put(self, path: str, body: Union[dict, bytes]=None) -> requests.Response:
         """Internal: HTTP PUT"""
-        if isinstance(body, dict):
-            body = json.dumps(body)
         return self._request('PUT', path, data=body)
 
     def _post(self, path: str, body: Union[dict, bytes]=None) -> requests.Response:
         """Internal: HTTP POST"""
-        if isinstance(body, dict):
-            body = json.dumps(body)
         return self._request('POST', path, data=body)
 
     def _patch(self, path: str, body: dict=None) -> requests.Response:
         """Internal: HTTP PATCH"""
-        if isinstance(body, dict):
-            body = json.dumps(body)
         return self._request('PATCH', path, data=body)
 
     def _delete(self, path: str) -> requests.Response:
