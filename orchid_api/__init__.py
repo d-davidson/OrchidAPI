@@ -127,8 +127,8 @@ class OrchidAPI:
         """Delete the current session."""
         return self._delete('/sessions/me')
 
-    def create_user_session(self, username: str, password: str, expires_in:
-                            int=3600, cookie: str='session') -> requests.Response:
+    def create_user_session(self, username: str, password: str, expires_in: int=3600,
+                            cookie: str='session') -> requests.Response:
         """Create a new user session.
 
         Parameters:
@@ -446,8 +446,8 @@ class OrchidAPI:
         """
         return self._get(f'/cameras/{camera_id}/streams/{stream_id}/motion/mask')
 
-    def upload_stream_motion_mask(self, camera_id: int, stream_id:
-                                  int, mask: bytes) -> requests.Response:
+    def upload_stream_motion_mask(self, camera_id: int, stream_id: int,
+                                  mask: bytes) -> requests.Response:
         """Upload a camera stream's motion mask.
 
         Parameters:
@@ -929,7 +929,7 @@ class OrchidAPI:
 
     ### Internal Utility
 
-    def _request(self, method: str, path: str, data: dict=None) -> requests.Response:
+    def _request(self, method: str, path: str, data: Union[dict, bytes]=None) -> requests.Response:
         """Internal: Make an HTTP request
 
         This adds an extra `body` member to the `requests.Response` object,
@@ -960,19 +960,19 @@ class OrchidAPI:
         """Internal: HTTP GET"""
         return self._request('GET', path)
 
-    def _put(self, path: str, body: dict=None) -> requests.Response:
+    def _put(self, path: str, body: Union[dict, bytes]=None) -> requests.Response:
         """Internal: HTTP PUT"""
         if isinstance(body, dict):
             body = json.dumps(body)
         return self._request('PUT', path, data=body)
 
-    def _post(self, path: str, body: dict=None) -> requests.Response:
+    def _post(self, path: str, body: Union[dict, bytes]=None) -> requests.Response:
         """Internal: HTTP POST"""
         if isinstance(body, dict):
             body = json.dumps(body)
         return self._request('POST', path, data=body)
 
-    def _patch(self, path: str, body: dict=None) -> requests.Response:
+    def _patch(self, path: str, body: Union[dict, bytes]=None) -> requests.Response:
         """Internal: HTTP PATCH"""
         if isinstance(body, dict):
             body = json.dumps(body)
