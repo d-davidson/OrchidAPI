@@ -972,7 +972,7 @@ class OrchidAPI:
             body = json.dumps(body)
         return self._request('POST', path, data=body)
 
-    def _patch(self, path: str, body: Union[dict, bytes]=None) -> requests.Response:
+    def _patch(self, path: str, body: dict=None) -> requests.Response:
         """Internal: HTTP PATCH"""
         if isinstance(body, dict):
             body = json.dumps(body)
