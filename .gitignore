@@ -1,6 +1,6 @@
 build
-*.egg-info*
-*__pycache__*
-*.pytest_cache*
+*.egg-info
+__pycache__
+*.pytest_cache
 tests/setup.ini
 *.coverage
