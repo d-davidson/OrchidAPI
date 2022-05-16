@@ -54,9 +54,6 @@ class OrchidAPI:
         self.session.auth = (user, password) if user and password else auth
         self.timeout = timeout if isinstance(timeout, tuple) else (timeout, timeout)
 
-    def __del__(self) -> None:
-        self.session.close()
-
     def set_bearer_token(self, token: str) -> None:
         """Set the bearer authorization token for HTTP requests.
 
