@@ -734,7 +734,7 @@ class OrchidAPI:
             query_params += f'&type={event_types}'
         return self._get(f'/events/camera-stream/histogram?{query_params}')
 
-    def create_smart_search_session(self, search_regions_mapping: list):
+    def create_smart_search_session(self, search_regions_mapping: list) -> requests.Response:
         """Create a Smart Search session
 
         Note: use `create_search_region_element` to help build this request.
@@ -745,7 +745,8 @@ class OrchidAPI:
         body = { 'searchRegionsMapping': search_regions_mapping }
         return self._post('/events/camera-stream/smart-search', body)
 
-    def get_smart_search_session_results(self, uuid: str, start: int, stop: int, min_segment: int, stream_ids: str=None):
+    def get_smart_search_session_results(self, uuid: str, start: int, stop: int,
+                                         min_segment: int, stream_ids: str=None) -> requests.Response:
         """Retrieve the Smart Search results for a given session.
 
         Parameters:
@@ -768,7 +769,7 @@ class OrchidAPI:
             query_params += f'&id={stream_ids}'
         return self._get(f'/events/camera-stream/smart-search/{uuid}/results?{query_params}')
 
-    def delete_smart_search_session(self, uuid: str):
+    def delete_smart_search_session(self, uuid: str) -> requests.Response:
         """Delete a Smart Search session.
 
         Parameters:

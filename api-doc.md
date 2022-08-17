@@ -1083,7 +1083,8 @@ Get camera stream event histogram.
 #### create\_smart\_search\_session
 
 ```python
-def create_smart_search_session(search_regions_mapping: list)
+def create_smart_search_session(
+        search_regions_mapping: list) -> requests.Response
 ```
 
 Create a Smart Search session
@@ -1103,7 +1104,8 @@ def get_smart_search_session_results(uuid: str,
                                      start: int,
                                      stop: int,
                                      min_segment: int,
-                                     stream_ids: str = None)
+                                     stream_ids: str = None
+                                     ) -> requests.Response
 ```
 
 Retrieve the Smart Search results for a given session.
@@ -1129,7 +1131,7 @@ Retrieve the Smart Search results for a given session.
 #### delete\_smart\_search\_session
 
 ```python
-def delete_smart_search_session(uuid: str)
+def delete_smart_search_session(uuid: str) -> requests.Response
 ```
 
 Delete a Smart Search session.
