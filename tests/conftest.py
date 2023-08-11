@@ -18,8 +18,7 @@ def secret():
 def encoded_jwt(secret):
     iat = int(time.time())
     exp = iat + 300
-    encoded_jwt = jwt.encode({'iat': iat, 'exp': exp}, secret, algorithm='HS256'
-                            ).decode('utf-8')
+    encoded_jwt = jwt.encode({'iat': iat, 'exp': exp}, secret, algorithm='HS256')
     return encoded_jwt
 
 @pytest.fixture
