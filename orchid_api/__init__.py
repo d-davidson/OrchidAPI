@@ -104,7 +104,7 @@ class OrchidAPI:
         return self._get('/trusted/issuer')
 
     def create_trusted_issuer(self, orchid_uuid: str, secret: bytes,
-                              description: str='', uri: str='') -> requests.Response:
+                              description: str='', uri: str='', parent_id: str='fusion', name: str='Parent Server') -> requests.Response:
         """Create a trusted issuer.
 
         Parameters:
@@ -115,6 +115,11 @@ class OrchidAPI:
         description: Describes the trusted issue.
 
         uri: URI to the trusted issuer.
+
+        parent_id: The parent server ID.
+
+        name: The name of the trusted issuer.
+
         """
         body = {
             'id': orchid_uuid,
@@ -124,7 +129,9 @@ class OrchidAPI:
                 'k': base64.urlsafe_b64encode(secret).decode('utf-8')
                 },
             'description': description,
-            'uri': uri
+            'uri': uri,
+            'parentId': parent_id,
+            'name': name
             }
         return self._post('/trusted/issuer?version=2', body)
 
