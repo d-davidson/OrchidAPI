@@ -87,32 +87,6 @@ Set the bearer authorization token for HTTP requests.
 
 - `token` - Bearer authorization token to set.
 
-<a id="orchid_api.OrchidAPI.create_search_region_element"></a>
-
-#### create\_search\_region\_element
-
-```python
-@classmethod
-def create_search_region_element(cls,
-                                 stream_id: int,
-                                 search_regions: list,
-                                 canvas_width: int = 320,
-                                 canvas_height: int = 240) -> dict
-```
-
-Create a Smart Search region mapping element for `POST /events/camera-stream/smart-search`
-
-**Arguments**:
-
-- `stream_id` - Stream ID to create region mapping element for.
-  
-- `search_regions` - Json array of polygon coordinates for where to find motion within an image.
-  Of the form: [ [[x1, y1], [x2, y2]], [[x3, y3], [x4, y4]] ].
-  
-- `canvas_width` - Image canvas height (defaults to 320).
-  
-- `canvas_height` - Image canvas height (defaults to 240).
-
 <a id="orchid_api.OrchidAPI.get_server_time"></a>
 
 #### get\_server\_time
@@ -146,7 +120,9 @@ Retrieve the current trusted issuer.
 def create_trusted_issuer(orchid_uuid: str,
                           secret: bytes,
                           description: str = '',
-                          uri: str = '') -> requests.Response
+                          uri: str = '',
+                          parent_id: str = 'fusion',
+                          name: str = 'Parent Server') -> requests.Response
 ```
 
 Create a trusted issuer.
@@ -160,6 +136,10 @@ Create a trusted issuer.
 - `description` - Describes the trusted issue.
   
 - `uri` - URI to the trusted issuer.
+  
+- `parent_id` - The parent server ID.
+  
+- `name` - The name of the trusted issuer.
 
 <a id="orchid_api.OrchidAPI.delete_trusted_issuer"></a>
 
@@ -1077,68 +1057,6 @@ Get camera stream event histogram.
   
 - `event_types` - Comma separated string of event types. If specified, only retrieve the
   listed event types.
-
-<a id="orchid_api.OrchidAPI.create_smart_search_session"></a>
-
-#### create\_smart\_search\_session
-
-```python
-def create_smart_search_session(
-        search_regions_mapping: list) -> requests.Response
-```
-
-Create a Smart Search session
-
-Note: use `create_search_region_element` to help build this request.
-
-**Arguments**:
-
-- `search_regions` - Json array of polygon coordinates for where to find motion within an image.
-
-<a id="orchid_api.OrchidAPI.get_smart_search_session_results"></a>
-
-#### get\_smart\_search\_session\_results
-
-```python
-def get_smart_search_session_results(uuid: str,
-                                     start: int,
-                                     stop: int,
-                                     min_segment: int,
-                                     stream_ids: str = None
-                                     ) -> requests.Response
-```
-
-Retrieve the Smart Search results for a given session.
-
-**Arguments**:
-
-- `uuid` - UUID of the Smart Search session.
-  
-- `start` - Start time for when to start looking for motion within search regions.
-  UTC epoch, milliseconds.
-  
-- `stop` - Stop time for when to stop looking for motion within searh regions.
-  UTC epoch, milliseconds.
-  
-- `min_segment` - The minimum histogram bin size, in milliseconds.
-  
-- `stream_ids` - String array of stream IDs to search for within the search regions.
-  If unspecified, motion will be searched for in all streams within the session's
-  stream region mapping.
-
-<a id="orchid_api.OrchidAPI.delete_smart_search_session"></a>
-
-#### delete\_smart\_search\_session
-
-```python
-def delete_smart_search_session(uuid: str) -> requests.Response
-```
-
-Delete a Smart Search session.
-
-**Arguments**:
-
-  uuid - UUID of Smart Search session to delete.
 
 <a id="orchid_api.OrchidAPI.get_server_logs"></a>
 

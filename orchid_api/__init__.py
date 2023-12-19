@@ -62,28 +62,6 @@ class OrchidAPI:
         """
         self.session.auth = BearerAuth(token)
 
-    @classmethod
-    def create_search_region_element(cls, stream_id: int, search_regions: list,
-                                     canvas_width: int=320, canvas_height: int=240) -> dict:
-        """Create a Smart Search region mapping element for `POST /events/camera-stream/smart-search`
-
-        Parameters:
-        stream_id: Stream ID to create region mapping element for.
-
-        search_regions: Json array of polygon coordinates for where to find motion within an image.
-        Of the form: [ [[x1, y1], [x2, y2]], [[x3, y3], [x4, y4]] ].
-
-        canvas_width: Image canvas height (defaults to 320).
-
-        canvas_height: Image canvas height (defaults to 240).
-        """
-        return {
-            'streamId': stream_id,
-            'canvasWidth': canvas_width,
-            'canvasHeight': canvas_height,
-            'searchRegions': search_regions
-            }
-
     ### Time Services
 
     def get_server_time(self, extended: bool=True) -> requests.Response:
@@ -740,49 +718,6 @@ class OrchidAPI:
         if event_types:
             query_params += f'&type={event_types}'
         return self._get(f'/events/camera-stream/histogram?{query_params}')
-
-    def create_smart_search_session(self, search_regions_mapping: list) -> requests.Response:
-        """Create a Smart Search session
-
-        Note: use `create_search_region_element` to help build this request.
-
-        Parameters:
-        search_regions: Json array of polygon coordinates for where to find motion within an image.
-        """
-        body = { 'searchRegionsMapping': search_regions_mapping }
-        return self._post('/events/camera-stream/smart-search', body)
-
-    def get_smart_search_session_results(self, uuid: str, start: int, stop: int,
-                                         min_segment: int, stream_ids: str=None) -> requests.Response:
-        """Retrieve the Smart Search results for a given session.
-
-        Parameters:
-        uuid: UUID of the Smart Search session.
-
-        start: Start time for when to start looking for motion within search regions.
-        UTC epoch, milliseconds.
-
-        stop: Stop time for when to stop looking for motion within searh regions.
-        UTC epoch, milliseconds.
-
-        min_segment: The minimum histogram bin size, in milliseconds.
-
-        stream_ids: String array of stream IDs to search for within the search regions.
-        If unspecified, motion will be searched for in all streams within the session's
-        stream region mapping.
-        """
-        query_params = f'start={start}&stop={stop}&minSegment={min_segment}'
-        if stream_ids:
-            query_params += f'&id={stream_ids}'
-        return self._get(f'/events/camera-stream/smart-search/{uuid}/results?{query_params}')
-
-    def delete_smart_search_session(self, uuid: str) -> requests.Response:
-        """Delete a Smart Search session.
-
-        Parameters:
-        uuid - UUID of Smart Search session to delete.
-        """
-        return self._delete(f'/events/camera-stream/smart-search/{uuid}')
 
     ### Logs Services
 
