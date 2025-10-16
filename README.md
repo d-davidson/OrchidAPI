@@ -15,8 +15,7 @@ from orchid_api import OrchidAPI
 
 api = OrchidAPI('https://your-orchid-server:8443', user='thunder', password='P@ssword')
 
-cam = api.get_camera(1).body
-cam['name'] = 'New camera name'
-
-resp = api.patch_camera(1, cam)
+body = {'name': 'New camera name'}
+if api.patch('/cameras/1', body).status_code == 200:
+    print(api.get('/cameras/1').json()['name'])
 ```
