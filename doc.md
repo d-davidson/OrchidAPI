@@ -3,7 +3,6 @@
 # \_\_init\_\_
 
 OrchidAPI: Orchid Core VMS API wrapper.
-Orchid API documentation: https://orchid.ipconfigure.com/api/.
 
 <a id="__init__.BearerAuth"></a>
 
