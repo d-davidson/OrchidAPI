@@ -1,6 +1,4 @@
-"""OrchidAPI: Orchid Core VMS API wrapper.
-Orchid API documentation: https://orchid.ipconfigure.com/api/.
-"""
+"""OrchidAPI: Orchid Core VMS API wrapper."""
 
 import json
 import requests
