@@ -1,7 +1,9 @@
 # OrchidAPI
 `OrchidAPI` is a lightweight, easy-to-use API wrapper designed for streamlining automated tasks with an [Orchid Core VMS](https://www.ipconfigure.com).
 
-See: [Orchid Core VMS API documentation](https://orchid.ipconfigure.com/api/).
+See:
+- [OrchidAPI documentation](doc.md)
+- [Orchid Core VMS API documentation](https://orchid.ipconfigure.com/api).
 
 # Installing
 Currently only local installation is supported (this library has not been uploaded to PyPI, yet).

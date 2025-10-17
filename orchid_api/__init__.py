@@ -75,16 +75,21 @@ class OrchidAPI:
                                     data=data, timeout=self.timeout)
 
     def get(self, path: str) -> requests.Response:
+        """Make an HTTP GET request to the Orchid server."""
         return self.request('GET', path)
 
     def put(self, path: str, body: Union[dict, bytes]=None) -> requests.Response:
+        """Make an HTTP PUT request to the Orchid server."""
         return self.request('PUT', path, data=body)
 
     def post(self, path: str, body: Union[dict, bytes]=None) -> requests.Response:
+        """Make an HTTP POST request to the Orchid server."""
         return self.request('POST', path, data=body)
 
     def patch(self, path: str, body: dict=None) -> requests.Response:
+        """Make an HTTP PATCH request to the Orchid server."""
         return self.request('PATCH', path, data=body)
 
     def delete(self, path: str) -> requests.Response:
+        """Make an HTTP DELETE request to the Orchid server."""
         return self.request('DELETE', path)

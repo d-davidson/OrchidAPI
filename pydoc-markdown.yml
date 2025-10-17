@@ -1,0 +1,5 @@
+loaders:
+  - type: python
+    search_path: [orchid_api]
+renderer:
+  type: markdown
