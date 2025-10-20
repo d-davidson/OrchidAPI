@@ -26,7 +26,8 @@ class OrchidAPI:
     """Orchid Core VMS API wrapper implementation."""
 
     def __init__(self, address: str, auth: Union[BearerAuth, Tuple[str, str]]=None, user: str=None,
-                 password: str=None, timeout: Union[float, Tuple[float, float]]=(30.0, 30.0)) -> None:
+                 password: str=None, timeout: Union[float, Tuple[float, float]]=(30.0, 30.0),
+                 verify: bool=True) -> None:
         """OrchidAPI constructor.
 
         Parameters:
@@ -43,19 +44,15 @@ class OrchidAPI:
         timeout: Timeout (in seconds) for server connections and/or reads. If single value
         is supplied the value sets both connection and read timeout. To set the values
         separately, specify a tuple of the form: (connection, read).
+
+        verify: If using HTTPS, use cert verification for each request. Defaults to `True`.
+        Only recommended case for `False` is testing environments using self-signed certs.
         """
         self.server_address = address
         self.session = requests.Session()
         self.session.auth = (user, password) if user and password else auth
+        self.session.verify = verify
         self.timeout = timeout if isinstance(timeout, tuple) else (timeout, timeout)
-
-    def set_bearer_token(self, token: str) -> None:
-        """Set the bearer authorization token for HTTP requests.
-
-        Parameters:
-        token: Bearer authorization token to set.
-        """
-        self.session.auth = BearerAuth(token)
 
     def request(self, method: str, path: str, data: Union[dict, bytes]=None) -> requests.Response:
         """Make an HTTP request to the Orchid server.
@@ -65,7 +62,7 @@ class OrchidAPI:
 
         path: The endpoint path (e.g. /cameras/1).
 
-        data: Data, if any. Can be `None`, `dict`, or `bytes`.
+        data: Data, if any.
         """
         if isinstance(data, dict):
             data = json.dumps(data)
